@@ -2,9 +2,25 @@
 
 ## Subindo o banco de dados localmente
 
-Para subir o banco de dados localmente, é necessário ter o Docker Compose instalado. Assim, basta dar `docker-compose up db-alfa2bd-time2` para subir o banco de dados do time 2. O acesso ao banco é obtido pela porta 5432.
+Para subir o banco de dados localmente, é necessário ter o Docker Compose instalado. Assim, basta executar
 
-Caso dê algum problema na porta 5432 sendo usada no Linux, basta pegar o ID de quem usa a porta com `sudo netstat -lpn | grep :5432` e rodar `sudo kill -9` nesse ID.
+```shell
+docker-compose up db-alfa2bd-time2
+```
+
+para subir o banco de dados do time 2. O acesso ao banco está configurado na porta padrão 5432.
+
+Caso dê problema na porta 5432 já sendo usada no Linux, basta pegar o ID de quem usa a porta com
+
+```shell
+sudo netstat -lpn | grep :5432
+```
+
+e rodar o seguinte comando no ID:
+
+```shell
+sudo kill -9
+```
 
 ## Configurando ambiente python
 
@@ -20,6 +36,12 @@ Para criar o ambiente virtual, execute:
 virtualenv venv
 ```
 
+Para ativar o ambiente virtual, use:
+
+```shell
+source venv/bin/activate
+```
+
 Uma vez ativado o ambiente virtual, instale os pacotes:
 
 ```shell
@@ -28,7 +50,7 @@ pip install -r requirements.txt
 
 Sempre que for instalado um novo pacote é nesse arquivo que será colocado as mudanças.
 
-## Criando modelo script SQls
+## Criando modelo script SQLs
 
 Para criar o modelo usando script SQL basta executar o código python `add_model_db.py`.
 
