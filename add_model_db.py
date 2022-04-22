@@ -39,6 +39,7 @@ if __name__ == '__main__':
 
         cursor = conn.cursor()
         cursor.execute(script_sql)
+        conn.commit()
 
     except Exception as e:
         print(e)
