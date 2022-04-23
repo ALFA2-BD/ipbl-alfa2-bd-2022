@@ -3,3 +3,4 @@
 .vscode
 mm_test.py
 **/migrations
+chromedriver
