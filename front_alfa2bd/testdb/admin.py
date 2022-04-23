@@ -1,3 +1,10 @@
 from django.contrib import admin
 
 # Register your models here.
+
+from .models import *
+
+admin.site.register(InfraEstrutura)
+admin.site.register(Node)
+admin.site.register(UnidadeEscolar)
+admin.site.register(Contrato)
