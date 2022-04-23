@@ -48,3 +48,14 @@ class ScriptsSql:
         finally:
             if cursor is not None:
                 cursor.close()
+
+    def delete_all_data(self):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute('DELETE FROM INFRAESTRUTURA')
+            cursor.execute('DELETE FROM UNIDADE_ESCOLAR')
+            cursor.execute('DELETE FROM CONTRATO')
+            cursor.execute('DELETE FROM NODE')
+            self.conn.commit()
+        except Exception as e:
+            print(e)
