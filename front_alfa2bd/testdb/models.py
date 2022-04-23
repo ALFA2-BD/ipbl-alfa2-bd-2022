@@ -1,9 +1,4 @@
 from django.db import models
-import django
-import os
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'front_alfa2bd.settings')
-django.setup()
 
 class UnidadeEscolar(models.Model):
     uni_id = models.AutoField(primary_key=True, db_column='uni_id')
