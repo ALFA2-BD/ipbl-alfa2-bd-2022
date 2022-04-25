@@ -56,6 +56,10 @@ class ScriptsSql:
             cursor.execute('DELETE FROM UNIDADE_ESCOLAR')
             cursor.execute('DELETE FROM CONTRATO')
             cursor.execute('DELETE FROM NODE')
+
+            cursor.execute('DELETE FROM ALUNO')
+            cursor.execute('DELETE FROM PROFESSOR')
+            cursor.execute('DELETE FROM COLETA')
             self.conn.commit()
         except Exception as e:
             print(e)

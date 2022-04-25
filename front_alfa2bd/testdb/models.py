@@ -42,8 +42,40 @@ class Node(models.Model):
     nod_id = models.AutoField(primary_key=True, db_column='nod_id')
     inf_id = models.ForeignKey(InfraEstrutura, models.DO_NOTHING, db_column='inf_id')
     nod_ip = models.CharField(max_length=15, db_column='nod_ip')
-    nod_porta = models.IntegerField()
+    nod_porta = models.IntegerField(db_column='nod_porta')
 
     class Meta:
         managed = False
         db_table = 'node'
+
+class Aluno(models.Model):
+    alu_id = models.AutoField(primary_key=True, db_column='alu_id')
+    alu_primeiro_nome = models.CharField(db_column='alu_primeiro_nome', max_length=255)
+    alu_segundo_nome = models.CharField(db_column='alu_segundo_nome', max_length=255)
+    alu_escola = models.CharField(db_column='alu_escola', max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'aluno'
+
+class Professor(models.Model):
+    pro_id = models.AutoField(primary_key=True, db_column='pro_id')
+    pro_primeiro_nome = models.CharField(db_column='pro_primeiro_nome', max_length=255)
+    pro_segundo_nome = models.CharField(db_column='pro_segundo_nome', max_length=255)
+    pro_escola = models.CharField(db_column='pro_escola', max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'professor'
+
+class Coleta(models.Model):
+    col_id = models.AutoField(primary_key=True, db_column='col_id')
+    col_prim_tentativa = models.IntegerField(db_column='col_prim_tentativa')
+    col_seg_tentativa = models.IntegerField(db_column='col_seg_tentativa')
+    col_ter_tentativa = models.IntegerField(db_column='col_ter_tentativa')
+    alu_id = models.ForeignKey(Aluno, models.DO_NOTHING, db_column='alu_id')
+    pro_id = models.ForeignKey(Professor, models.DO_NOTHING, db_column='pro_id')
+
+    class Meta:
+        managed = False
+        db_table = 'coleta'
