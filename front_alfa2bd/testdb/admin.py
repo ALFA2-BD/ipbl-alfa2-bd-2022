@@ -8,3 +8,7 @@ admin.site.register(InfraEstrutura)
 admin.site.register(Node)
 admin.site.register(UnidadeEscolar)
 admin.site.register(Contrato)
+
+admin.site.register(Aluno)
+admin.site.register(Professor)
+admin.site.register(Coleta)
