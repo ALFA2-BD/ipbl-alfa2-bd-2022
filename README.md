@@ -74,7 +74,7 @@ Ele executará os scripts SQL usando python.
 
 Para usar o Django há alguns comandos principais que podem ajudar no desenvolvimento.
 
-O comando `python django-admin startproject [anithing_project]` criar um novo projeto Django.
+O comando `django-admin startproject [anithing_project]` criar um novo projeto Django.
 
 O comando `python manage.py runserver` executa o servidor Django.
 
