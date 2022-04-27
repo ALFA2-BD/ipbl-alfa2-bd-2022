@@ -1,24 +1,20 @@
-from distutils.debug import DEBUG
 import psycopg2
-import os
-from dotenv import load_dotenv
+from decouple import config
 
 class ScriptsSql:
     def __init__(self) -> None:
 
         super().__init__()
 
-        load_dotenv()
-
         self.conn = psycopg2.connect(
-            host = os.getenv('HOST_NAME'),
-            dbname = os.getenv('DB_NAME'),
-            user = os.getenv('USER_NAME'),
-            password = os.getenv('PASSWORD'),
-            port = os.getenv('PORT')
+            host = config('DB_HOST_NAME'),
+            dbname = config('DB_NAME'),
+            user = config('BD_USER_NAME'),
+            password = config('DB_PASSWORD'),
+            port = config('DB_PORT', cast=int)
         )
 
-    def get_script_sql(self, file_name):
+    def get_script_sql(self, file_name:str)->None:
 
         root_path = 'models'
 
@@ -30,11 +26,11 @@ class ScriptsSql:
 
         return script_sql
 
-    def close_connection(self):
+    def close_connection(self)->None:
         if self.conn is not None:
             self.conn.close()
 
-    def set_tables_in_db(self, file_name:str):
+    def set_tables_in_db(self, file_name:str)->None:
 
         script_sql = self.get_script_sql(file_name)
 
@@ -49,7 +45,7 @@ class ScriptsSql:
             if cursor is not None:
                 cursor.close()
 
-    def delete_all_data(self):
+    def delete_all_data(self)->None:
         try:
             cursor = self.conn.cursor()
             cursor.execute('DELETE FROM INFRAESTRUTURA')
@@ -61,5 +57,18 @@ class ScriptsSql:
             cursor.execute('DELETE FROM PROFESSOR')
             cursor.execute('DELETE FROM COLETA')
             self.conn.commit()
+        except Exception as e:
+            print(e)
+
+    def see_n_first_rows_from(self, table_name:str, n=100)->None:
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute("SELECT * FROM {} limit {}".format(table_name, n))
+
+            rows = cursor.fetchall()
+
+            for row in rows:
+                print(row)
+
         except Exception as e:
             print(e)
