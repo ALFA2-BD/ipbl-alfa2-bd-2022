@@ -11,7 +11,7 @@ from apps.authentication.models import *
 
 def main():
     fake = Faker(locale='pt_BR')
-    number_examples = 10
+    number_examples = 100
 
     for index in range(number_examples):
         infraestrutura = InfraEstrutura(
