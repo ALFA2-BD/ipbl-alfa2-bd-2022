@@ -4,22 +4,24 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 import os
-from decouple import config
 from unipath import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).parent
 CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = os.getenv('DEBUG')
 
 # load production server from .env
-ALLOWED_HOSTS        = ['localhost', 'localhost:85', '127.0.0.1', config('SERVER', default='127.0.0.1')]
-CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS        = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER')]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + os.getenv('SERVER')]
 
 # Application definition
 
@@ -30,7 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.home'  # Enable the inner home (home)
+    'apps.home',
+    'apps.authentication'
 ]
 
 MIDDLEWARE = [
@@ -70,35 +73,16 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': config('DB_ENGINE'),
-        'NAME': config('DB_NAME'),
-        'USER': config('BD_USER_NAME'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST_NAME'),
-        'PORT': config('DB_PORT', cast=int),
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('BD_USER_NAME'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST_NAME'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': config('ENGINE'),
-#         'NAME': config('DB_NAME'),
-#         'USER': config('USER_NAME'),
-#         'PASSWORD': config('PASSWORD'),
-#         'HOST': config('HOST_NAME'),
-#         'PORT': config('PORT'),
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
