@@ -57,7 +57,7 @@ def main():
             con_tipo = randint(1, 3),
         )
         contrato.save()
-    
+
     for index in range(number_examples):
         name_student = fake.name().split()
         school_student = fake.name().split()
@@ -80,22 +80,29 @@ def main():
 
     alunos = list(Aluno.objects.all())
     professores = list(Professor.objects.all())
-    
+
     for index in range(min(len(alunos), len(professores))):
         # grade 0 means not tested
+        first_probability = 0.5
         second_probability = 0.3
-        second_grade = choices([0, uniform(0, 100)], [1-second_probability, second_probability])[0]
-        
-        if second_grade != 0:
+
+        first_grade = choices([0, uniform(0, 100)], [1-first_probability, first_probability])[0]
+
+        if first_grade != 0:
+            second_grade = 0
             third_grade = 0
+
         else:
-            third_probability = 0.1
-            third_grade = choices([0, uniform(0, 100)], [1-third_probability, third_probability])[0]
+            second_grade = choices([0, uniform(0, 100)], [1-second_probability, second_probability])[0]
+            if second_grade != 0:
+                third_grade = 0
+            else:
+                third_grade = uniform(0,100)
 
         coleta = Coleta(
             alu_id = Aluno.objects.get(pk=alunos[index].alu_id),
             pro_id = Professor.objects.get(pk=professores[index].pro_id),
-            col_prim_tentativa = uniform(0, 100),
+            col_prim_tentativa = first_grade,
             col_seg_tentativa = second_grade,
             col_ter_tentativa = third_grade,
         )
