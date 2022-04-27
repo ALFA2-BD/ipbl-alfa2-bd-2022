@@ -52,14 +52,14 @@ class ScriptsSql:
     def delete_all_data(self):
         try:
             cursor = self.conn.cursor()
-            cursor.execute('DELETE FROM INFRAESTRUTURA')
-            cursor.execute('DELETE FROM UNIDADE_ESCOLAR')
             cursor.execute('DELETE FROM CONTRATO')
             cursor.execute('DELETE FROM NODE')
+            cursor.execute('DELETE FROM INFRAESTRUTURA')
+            cursor.execute('DELETE FROM UNIDADE_ESCOLAR')
 
+            cursor.execute('DELETE FROM COLETA')
             cursor.execute('DELETE FROM ALUNO')
             cursor.execute('DELETE FROM PROFESSOR')
-            cursor.execute('DELETE FROM COLETA')
             self.conn.commit()
         except Exception as e:
             print(e)
