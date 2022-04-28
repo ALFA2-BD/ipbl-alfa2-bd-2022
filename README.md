@@ -15,7 +15,7 @@ Dentro dessa pasta tem o arquivo `mock_dataset.py`, que é responsável por popu
 Para subir o banco de dados localmente, é necessário ter o Docker Compose instalado. Assim, basta executar
 
 ```shell
-docker-compose up db-alfa2bd-time2
+docker-compose up db-alfa2bd
 ```
 
 para subir o banco de dados do time 2. O acesso ao banco está configurado na porta padrão 5432.
@@ -74,7 +74,7 @@ Ele executará os scripts SQL usando python.
 
 Para usar o Django há alguns comandos principais que podem ajudar no desenvolvimento.
 
-O comando `python django-admin startproject [anithing_project]` criar um novo projeto Django.
+O comando `django-admin startproject [anithing_project]` criar um novo projeto Django.
 
 O comando `python manage.py runserver` executa o servidor Django.
 
