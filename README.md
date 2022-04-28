@@ -15,7 +15,7 @@ Dentro dessa pasta tem o arquivo `mock_dataset.py`, que é responsável por popu
 Para subir o banco de dados localmente, é necessário ter o Docker Compose instalado. Assim, basta executar
 
 ```shell
-docker-compose up db-alfa2bd-time2
+docker-compose up db-alfa2bd
 ```
 
 para subir o banco de dados do time 2. O acesso ao banco está configurado na porta padrão 5432.
