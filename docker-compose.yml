@@ -20,7 +20,7 @@ services:
       - web_network
     depends_on:
       - appseed-app
-  db-alfa2bd-time2:
+  db-alfa2bd:
     image: postgres:13-alpine
     environment:
       POSTGRES_USER: root
