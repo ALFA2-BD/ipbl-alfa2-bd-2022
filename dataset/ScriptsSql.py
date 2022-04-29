@@ -52,13 +52,20 @@ class ScriptsSql:
         try:
             cursor = self.conn.cursor()
             cursor.execute('DELETE FROM CONTRATO')
+            cursor.execute('TRUNCATE TABLE CONTRATO RESTART IDENTITY CASCADE')
             cursor.execute('DELETE FROM NODE')
+            cursor.execute('TRUNCATE TABLE NODE RESTART IDENTITY CASCADE')
             cursor.execute('DELETE FROM INFRAESTRUTURA')
+            cursor.execute('TRUNCATE TABLE INFRAESTRUTURA RESTART IDENTITY CASCADE')
             cursor.execute('DELETE FROM UNIDADE_ESCOLAR')
+            cursor.execute('TRUNCATE TABLE UNIDADE_ESCOLAR RESTART IDENTITY CASCADE')
 
             cursor.execute('DELETE FROM COLETA')
+            cursor.execute('TRUNCATE TABLE COLETA RESTART IDENTITY CASCADE')
             cursor.execute('DELETE FROM ALUNO')
+            cursor.execute('TRUNCATE TABLE ALUNO RESTART IDENTITY CASCADE')
             cursor.execute('DELETE FROM PROFESSOR')
+            cursor.execute('TRUNCATE TABLE PROFESSOR RESTART IDENTITY CASCADE')
             self.conn.commit()
         except Exception as e:
             print(e)
