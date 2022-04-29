@@ -63,8 +63,8 @@ def main():
         school_student = fake.name().split()
         aluno = Aluno(
             alu_primeiro_nome = name_student[0],
-            alu_segundo_nome = name_student[1],
-            alu_escola = "Escola " + school_student[0]
+            alu_segundo_nome = name_student[len(name_student) - 1],
+            alu_escola = "Escola " + school_student[len(school_student) - 1]
         )
         aluno.save()
 
@@ -73,8 +73,8 @@ def main():
         school_prof = fake.name().split()
         professor = Professor(
             pro_primeiro_nome = name_prof[0],
-            pro_segundo_nome = name_prof[1],
-            pro_escola = "Escola " + school_prof[0]
+            pro_segundo_nome = name_prof[len(name_prof) - 1],
+            pro_escola = "Escola " + school_prof[len(school_prof) - 1]
         )
         professor.save()
 
@@ -85,17 +85,17 @@ def main():
         # grade 0 means not tested
         first_probability = 0.5
         second_probability = 0.3
+        second_grade = choices([0, uniform(0, 100)], [1-second_probability, second_probability])[0]
 
         first_grade = choices([0, uniform(0, 100)], [1-first_probability, first_probability])[0]
 
         if first_grade != 0:
             second_grade = 0
-        second_grade = choices([0, uniform(0, 100)], [1-second_probability, second_probability])[0]
-
-        if second_grade != 0:
             third_grade = 0
 
         else:
+            third_probability = 0.1
+            third_grade = choices([0, uniform(0, 100)], [1-third_probability, third_probability])[0]
             second_grade = choices([0, uniform(0, 100)], [1-second_probability, second_probability])[0]
             if second_grade != 0:
                 third_grade = 0
