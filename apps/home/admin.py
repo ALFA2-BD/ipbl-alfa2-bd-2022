@@ -2,7 +2,7 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
-from models import *
+from .models import *
 from django.contrib import admin
 
 admin.site.register(Unidade_Escolar)
