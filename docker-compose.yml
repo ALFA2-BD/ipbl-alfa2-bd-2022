@@ -5,21 +5,19 @@ services:
     restart: always
     env_file: .env
     build: .
-    networks:
-      - db_network
-      - web_network
-  nginx:
-    container_name: nginx
-    restart: always
-    image: "nginx:latest"
-    ports:
-      - "85:85"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-    networks:
-      - web_network
-    depends_on:
-      - appseed-app
+    network_mode: host
+  # nginx:
+  #   container_name: nginx
+  #   restart: always
+  #   image: "nginx:latest"
+  #   ports:
+  #     - "85:85"
+  #   volumes:
+  #     - ./nginx:/etc/nginx/conf.d
+  #   networks:
+  #     - web_network
+  #   depends_on:
+  #     - appseed-app
   db-alfa2bd:
     image: postgres:13-alpine
     environment:
@@ -27,14 +25,5 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: core
     command: [ "postgres", "-c", "log_statement=all" ]
-    ports:
-      - "5432:5432/tcp"
     restart: always
-    networks:
-      - alfa2bd
-networks:
-  db_network:
-    driver: bridge
-  web_network:
-    driver: bridge
-  alfa2bd: { }
+    network_mode: host
