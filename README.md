@@ -1,4 +1,4 @@
-# Projeto ALFA2
+# Projeto ALFA2-BD
 
 ## Explicação da Estrutura
 
