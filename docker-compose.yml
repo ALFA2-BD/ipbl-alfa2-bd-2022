@@ -32,6 +32,15 @@ services:
     restart: always
     networks:
       - alfa2bd
+  db-nosql:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - '27017:27017'
+
 networks:
   db_network:
     driver: bridge
