@@ -3,10 +3,23 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
+from django.shortcuts import redirect
 
 def login(request):
     context = {'segment': 'login'}
     html_template = loader.get_template('professor/screens/login.html')
+    return HttpResponse(html_template.render(context, request))
+
+def login_test(request):
+    print(request.POST)
+
+    context = {
+        'segment': 'login',
+        'nome': request.POST['nome_professor'],
+        'senha': request.POST['senha_professor']
+    }
+    html_template = loader.get_template('professor/screens/login_test.html')
+    response = redirect('/professor/home')
     return HttpResponse(html_template.render(context, request))
 
 def home(request):

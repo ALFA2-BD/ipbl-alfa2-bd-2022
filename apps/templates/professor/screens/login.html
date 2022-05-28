@@ -30,14 +30,23 @@
                     <br />
                     <br />
 
-                    <form role="form" action="/professor/home">
-
+                    <form role="form" action="/professor/login_test" method="post">
+                        {% csrf_token %}
                         <div class="input-group mb-3">
-                            <input class="form-control" placeholder="Identificador Professor">
+                            <input
+                                class="form-control"
+                                placeholder="Identificador Professor"
+                                name="nome_professor"
+                            >
                         </div>
 
                         <div class="input-group mb-4">
-                            <input type="password" class="form-control" placeholder="Senha Professor">
+                            <input
+                                type="password"
+                                class="form-control"
+                                placeholder="Senha Professor"
+                                name="senha_professor"
+                            >
                         </div>
 
                         <button name="login" class="btn btn-primary shadow-2 mb-4">Entrar</button>
