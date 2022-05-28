@@ -1,17 +1,29 @@
-from http import client
 import pymongo
 import json
 from pymongo import MongoClient, InsertOne
-from bson import json_util
+from dotenv import load_dotenv
+import os
 
 class ScriptsMongoDB:
     def __init__(self) -> None:
 
         super().__init__()
 
-        self.client = pymongo.MongoClient("mongodb+srv://alfa2bd:alfa2bd@clusteralfa2bd.tirlce4.mongodb.net/?retryWrites=true&w=majority")
+        load_dotenv()
 
-        self.db = self.client.BaseAlfa2
+        user = os.getenv('DB_MONGO_USER')
+        password = os.getenv('DB_MONGO_PASSWORD')
+        dbname = os.getenv('DB_MONGO_NAME')
+        cluster_name = os.getenv('DB_MONGO_CLUSTER')
+
+        self.client = MongoClient("mongodb+srv://{}:{}@{}.tirlce4.mongodb.net/?retryWrites=true&w=majority".format(
+            user,
+            password,
+            dbname,
+            cluster_name
+        ))
+
+        self.db = self.client[dbname]
 
         self.collection = self.db.gestores
 
