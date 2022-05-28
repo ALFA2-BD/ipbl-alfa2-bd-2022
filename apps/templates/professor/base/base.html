@@ -45,10 +45,10 @@
     </div>
 
     <!-- Top Bar -->
-    {% include 'professor/navigation.html' %}
+    {% include 'professor/base/navigation.html' %}
 
     <!-- SideBar -->
-    {% include 'professor/sidebar.html' %}
+    {% include 'professor/base/sidebar.html' %}
 
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    {% include 'professor/scripts.html' %}
+    {% include 'includes/scripts.html' %}
 
     <!-- Specific Page JS goes HERE  -->
     {% block javascripts %}{% endblock javascripts %}

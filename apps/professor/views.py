@@ -6,19 +6,33 @@ from django.urls import reverse
 
 def login(request):
     context = {'segment': 'login'}
-    html_template = loader.get_template('professor/login.html')
+    html_template = loader.get_template('professor/screens/login.html')
     return HttpResponse(html_template.render(context, request))
 
 def home(request):
     context = {'segment': 'home'}
-    html_template = loader.get_template('professor/home.html')
+    html_template = loader.get_template('professor/screens/home.html')
     return HttpResponse(html_template.render(context, request))
 
 def coleta(request):
     context = {'segment': 'coleta'}
-    html_template = loader.get_template('professor/coleta.html')
+    html_template = loader.get_template('professor/screens/coleta.html')
     return HttpResponse(html_template.render(context, request))
 
+def banco_frases(request):
+    context = {'segment': 'banco_frases'}
+    html_template = loader.get_template('professor/screens/banco_frases.html')
+    return HttpResponse(html_template.render(context, request))
+
+def informacoes(request):
+    context = {'segment': 'informacoes'}
+    html_template = loader.get_template('professor/screens/informacoes.html')
+    return HttpResponse(html_template.render(context, request))
+
+def turmas(request):
+    context = {'segment': 'turmas'}
+    html_template = loader.get_template('professor/screens/turmas.html')
+    return HttpResponse(html_template.render(context, request))
 
 # @login_required(login_url="/login/")
 # def index(request):
