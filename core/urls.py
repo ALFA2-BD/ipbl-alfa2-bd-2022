@@ -6,5 +6,5 @@ urlpatterns = [
     # path("", include("apps.authentication.urls")),
     # path("", include("apps.home.urls"),
     path("professor/", include("apps.professor.urls")),
-    # path("", include("apps.gestor.urls"))
+    path("gestor/", include("apps.gestor.urls"))
 ]
