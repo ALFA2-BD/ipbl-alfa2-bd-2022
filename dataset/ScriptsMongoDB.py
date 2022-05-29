@@ -97,6 +97,24 @@ class ScriptsMongoDB:
 
                 return arr_doc
 
+    def get_data_find(self, *args, **kwargs):
+
+        if 'collection_name' in kwargs and 'filter' in kwargs:
+
+            collection_name = kwargs['collection_name']
+            filter = kwargs['filter']
+
+            objs = self.db[collection_name].find(filter)
+
+            dict_objs = []
+            for obj in objs:
+                dict_objs.append(obj)
+
+            return dict_objs
+
+        return []
+
+
     def number_elements_collection(self, *args, **kwargs):
 
         if 'collection_name' in kwargs:

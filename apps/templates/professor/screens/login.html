@@ -30,13 +30,14 @@
                     <br />
                     <br />
 
-                    <form role="form" action="/professor/login_test" method="post">
+                    <form role="form" action="/professor/verify_login" method="post">
                         {% csrf_token %}
                         <div class="input-group mb-3">
                             <input
                                 class="form-control"
                                 placeholder="Identificador Professor"
-                                name="nome_professor"
+                                name="identificador_professor"
+                                oninput="maskCPF(this)"
                             >
                         </div>
 

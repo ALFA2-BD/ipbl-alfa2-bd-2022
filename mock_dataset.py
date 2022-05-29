@@ -9,12 +9,16 @@ def main(*args, **kwargs):
 
     locate = 'pt_BR' if 'locate' not in kwargs else kwargs['locate']
     number_of_examples = 10 if 'number_of_examples' not in kwargs else kwargs['number_of_examples']
+    delete_elements_before = False if 'delete_elements_before' not in kwargs else kwargs['delete_elements_before']
 
     fake = Faker(locale=locate)
 
     scripts_mongodb = ScriptsMongoDB()
 
     ### Fake Frases ###
+
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='frases')
 
     if scripts_mongodb.number_elements_collection(collection_name='frases') == 0:
 
@@ -33,16 +37,21 @@ def main(*args, **kwargs):
 
     ### Fake Professor ###
 
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='professores')
+
     if scripts_mongodb.number_elements_collection(collection_name='professores') == 0:
 
         obj_professores = []
 
         for _ in range(number_of_examples):
             json_professores = {
+                'cpf':fake.cpf(),
                 'nome': {
                     'pnome': fake.first_name(),
                     'snome': fake.last_name()
                 },
+                'senha': '12345',
                 'escola': 'Escola ' + fake.bairro(),
             }
 
@@ -80,6 +89,9 @@ def main(*args, **kwargs):
 
     ### Fake Gestores ###
 
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='gestores')
+
     if scripts_mongodb.number_elements_collection(collection_name='gestores') == 0:
 
         obj_gestores = []
@@ -105,7 +117,8 @@ if __name__ == '__main__':
 
     config = {
         'number_of_examples': 10,
-        'locate': 'pt_BR'
+        'locate': 'pt_BR',
+        'delete_elements_before': True
     }
 
     main(**config)

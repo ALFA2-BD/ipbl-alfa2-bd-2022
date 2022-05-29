@@ -1,26 +1,47 @@
-from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import redirect
+from dataset.ScriptsMongoDB import ScriptsMongoDB
+import json
 
 def login(request):
     context = {'segment': 'login'}
     html_template = loader.get_template('professor/screens/login.html')
     return HttpResponse(html_template.render(context, request))
 
-def login_test(request):
-    print(request.POST)
+def verify_login(request):
+
+    if request.POST:
+
+        scripts_mongodb = ScriptsMongoDB()
+
+        data = request.POST
+        identificador_professor = data['identificador_professor']
+        senha_professor = data['senha_professor']
+
+        professor = scripts_mongodb.get_data_find(
+            collection_name='professores',
+            filter = {'cpf': '123.870.496-40'}
+        )[0]
+
+        scripts_mongodb.close_connection()
+
+        if senha_professor == professor['senha']:
+
+            context = {
+                'segment': 'home',
+                'err':''
+            }
+            return redirect('/professor/home', context)
 
     context = {
         'segment': 'login',
-        'nome': request.POST['nome_professor'],
-        'senha': request.POST['senha_professor']
+        'err':''
     }
-    html_template = loader.get_template('professor/screens/login_test.html')
-    response = redirect('/professor/home')
-    return HttpResponse(html_template.render(context, request))
+
+    return redirect('/professor/login', context)
 
 def home(request):
     context = {'segment': 'home'}
@@ -43,6 +64,43 @@ def informacoes(request):
     return HttpResponse(html_template.render(context, request))
 
 def turmas(request):
-    context = {'segment': 'turmas'}
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    professor = scripts_mongodb.get_data_find(
+        collection_name='professores',
+        filter = {'cpf': '123.870.496-40'}
+    )[0]
+
+    turmas = [] if 'turmas' not in professor else professor['turmas']
+
+    scripts_mongodb.close_connection()
+
+    for i in range(len(turmas)):
+        turmas[i]['quant_alu'] = len(turmas[i]['alunos'])
+
+    context = {
+        'segment': 'turmas',
+        'turmas': turmas,
+    }
+
     html_template = loader.get_template('professor/screens/turmas.html')
     return HttpResponse(html_template.render(context, request))
+
+def alunos(request):
+
+    if request.POST:
+
+        alunos = request.POST['alunos']
+
+        context = {
+            'segment': 'alunos',
+            'alunos': json.loads(alunos.replace("\'", '\"'))
+        }
+        html_template = loader.get_template('professor/screens/alunos.html')
+        return HttpResponse(html_template.render(context, request))
+
+    context = {
+        'segment': 'home',
+    }
+    return redirect('/professor/home', context)
