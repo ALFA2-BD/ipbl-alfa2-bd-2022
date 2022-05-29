@@ -78,6 +78,42 @@ def main(*args, **kwargs):
 
         collection_professores.bulk_write(obj_professores)
 
+    ### Fake Gestores ###
+
+    if scripts_mongodb.number_elements_collection(collection_name='gestores') == 0:
+
+        obj_gestores = []
+
+        for _ in range(number_of_examples):
+
+            json_gestor = {
+                'nome': {
+                    'pnome': fake.first_name(),
+                    'snome': fake.last_name()
+                },
+                'nivel': randint(1, 3),
+                'eh_admin': False,
+            }
+
+            obj_gestores.append(json_gestor)
+
+        json_gestor_admin = {
+            'nome': {
+                'pnome': fake.first_name(),
+                'snome': fake.last_name()
+            },
+            'nivel': randint(1, 3),
+            'eh_admin': True,
+            'gestores': [*obj_gestores]
+        }
+
+        obj_gestores.append(json_gestor_admin)
+
+        collection_gestores = scripts_mongodb.db['gestores']
+
+        collection_gestores.bulk_write(obj_gestores)
+
+
 if __name__ == '__main__':
 
     config = {
