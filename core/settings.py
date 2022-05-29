@@ -72,17 +72,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+#### PostgreSQL ####
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.getenv('DB_PG_ENGINE'),
+#         'NAME': os.getenv('DB_PG_NAME'),
+#         'USER': os.getenv('BD_PG_USER_NAME'),
+#         'PASSWORD': os.getenv('DB_PG_PASSWORD'),
+#         'HOST': os.getenv('DB_PG_HOST_NAME'),
+#         'PORT': os.getenv('DB_PG_PORT'),
+#     }
+# }
 
+#### MongoDB ####
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('BD_USER_NAME'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST_NAME'),
-        'PORT': os.getenv('DB_PORT'),
+        'ENGINE': os.getenv('DB_MONGO_ENGINE'),
+        'NAME': os.getenv('DB_MONGO_NAME'),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': "mongodb+srv://{}:{}@{}.tirlce4.mongodb.net/?retryWrites=true&w=majority".format(
+                os.getenv('DB_MONGO_USER'),
+                os.getenv('DB_MONGO_PASSWORD'),
+                os.getenv('DB_MONGO_NAME'),
+                os.getenv('DB_MONGO_CLUSTER')
+            )
+        }
     }
 }
 

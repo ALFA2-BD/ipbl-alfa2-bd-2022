@@ -1,4 +1,4 @@
-from ScriptsSql import ScriptsSql
+from dataset.ScriptsPostgreSQL import ScriptsSql
 
 sql_scripts = ScriptsSql()
 

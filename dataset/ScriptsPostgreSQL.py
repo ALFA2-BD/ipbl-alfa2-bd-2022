@@ -2,7 +2,7 @@ import psycopg2
 import os
 from dotenv import load_dotenv
 
-class ScriptsSql:
+class ScriptsPostgreSQL:
     def __init__(self) -> None:
 
         super().__init__()
@@ -10,11 +10,11 @@ class ScriptsSql:
         load_dotenv()
 
         self.conn = psycopg2.connect(
-            host = os.getenv('DB_HOST_NAME'),
-            dbname = os.getenv('DB_NAME'),
-            user = os.getenv('BD_USER_NAME'),
-            password = os.getenv('DB_PASSWORD'),
-            port = os.getenv('DB_PORT')
+            host = os.getenv('DB_PG_HOST_NAME'),
+            dbname = os.getenv('DB_PG_NAME'),
+            user = os.getenv('BD_PG_USER_NAME'),
+            password = os.getenv('DB_PG_PASSWORD'),
+            port = os.getenv('DB_PG_PORT')
         )
 
     def get_script_sql(self, file_name:str)->None:
