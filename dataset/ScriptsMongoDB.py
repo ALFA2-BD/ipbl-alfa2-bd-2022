@@ -60,7 +60,8 @@ class ScriptsMongoDB:
         if 'collection_name' in kwargs:
 
             collection_name = kwargs['collection_name']
-            _ = self.db[collection_name]
+
+            self.db.create_collection(collection_name)
 
     def list_collections(self, *args, **kwargs):
 
@@ -76,6 +77,36 @@ class ScriptsMongoDB:
             return collection_name in list_of_collection
 
         return False
+
+    def get_collection_data(self, *args, **kwargs):
+
+        if 'collection_name' in kwargs:
+
+            collection_name = kwargs['collection_name']
+
+            return_limit = 100 if 'return_limit' not in kwargs else kwargs['return_limit']
+
+            if self.verify_collection_in_db(**kwargs):
+
+                documents = self.db.get_collection(collection_name).find({}).limit(return_limit)
+
+                arr_doc = []
+
+                for document in documents:
+                    arr_doc.append(document)
+
+                return arr_doc
+
+    def number_elements_collection(self, *args, **kwargs):
+
+        if 'collection_name' in kwargs:
+
+            collection_name = kwargs['collection_name']
+
+            if self.verify_collection_in_db(**kwargs):
+                return self.db[collection_name].find().count()
+
+        return 0
 
     def close_connection(self, *args, **kwargs):
 
