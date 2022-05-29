@@ -1,6 +1,6 @@
-from dataset.ScriptsPostgreSQL import ScriptsSql
+from dataset.ScriptsPostgreSQL import ScriptsPostgreSQL
 
-sql_scripts = ScriptsSql()
+sql_scripts = ScriptsPostgreSQL()
 
 sql_scripts.get_script_sql('modelo_aluno_professor.sql')
 sql_scripts.get_script_sql('modelo_escola_infraestrutura.sql')
