@@ -85,18 +85,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # }
 
 #### MongoDB ####
+
+CONNECT_STR_MONGODB = "mongodb+srv://{}:{}@{}.tirlce4.mongodb.net/?retryWrites=true&w=majority".format(
+    os.getenv('DB_MONGO_USER'),
+    os.getenv('DB_MONGO_PASSWORD'),
+    os.getenv('DB_MONGO_NAME'),
+    os.getenv('DB_MONGO_CLUSTER')
+)
+
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_MONGO_ENGINE'),
         'NAME': os.getenv('DB_MONGO_NAME'),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': "mongodb+srv://{}:{}@{}.tirlce4.mongodb.net/?retryWrites=true&w=majority".format(
-                os.getenv('DB_MONGO_USER'),
-                os.getenv('DB_MONGO_PASSWORD'),
-                os.getenv('DB_MONGO_NAME'),
-                os.getenv('DB_MONGO_CLUSTER')
-            )
+            'host': CONNECT_STR_MONGODB
         }
     }
 }
@@ -144,7 +147,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
-
 
 #############################################################
 #############################################################
