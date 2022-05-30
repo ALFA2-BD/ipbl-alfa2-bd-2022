@@ -1,23 +1,105 @@
 {% extends "professor/base/base.html" %}
 
-{% block title %} Professor {% endblock %}
+{% block title %} Coleta {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-<div class="auth-wrapper">
-    <div class="auth-content">
-        <div class="auth-bg">
-            <span class="r"></span>
-            <span class="r s"></span>
-            <span class="r s"></span>
-            <span class="r"></span>
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="d-flex justify-content-center">
+                    <!--[ Recent Users ] start-->
+                    <div class="col-xl-10 col-md-6">
+                        <div class="card Recent-Users">
+                            <div class="card-header">
+                                <h5>Coleta de Audio</h5>
+                            </div>
+                            <div class="card-block px-0 py-3">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <tr class="unread">
+                                                <td>
+                                                    <h6 class="mb-1">Frase Simples</h6>
+                                                    <p class="m-0">alkjdlaskdjlkasdjlk</p>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-start-recording" class="btn btn-primary">Iniciar Gravação</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-stop-recording" class="btn btn-danger" disabled>Parar Gravação</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-release-microphone" class="btn btn-warning" disabled>Reconfigurar Microfone</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-download-recording" class="btn btn-dark" disabled>Download</button>
+                                                </td>
+                                                <td>
+                                                    <div><audio controls autoplay playsinline></audio></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="unread">
+                                                <td>
+                                                    <h6 class="mb-1">Frase Simples</h6>
+                                                    <p class="m-0">alkjdlaskdjlkasdjlk</p>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-start-recording" class="btn btn-primary">Iniciar Gravação</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-stop-recording" class="btn btn-danger" disabled>Parar Gravação</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-release-microphone" class="btn btn-warning" disabled>Reconfigurar Microfone</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-download-recording" class="btn btn-dark" disabled>Download</button>
+                                                </td>
+                                                <td>
+                                                    <div><audio controls autoplay playsinline></audio></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="unread">
+                                                <td>
+                                                    <h6 class="mb-1">Frase Simples</h6>
+                                                    <p class="m-0">alkjdlaskdjlkasdjlk</p>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-start-recording" class="btn btn-primary">Iniciar Gravação</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-stop-recording" class="btn btn-danger" disabled>Parar Gravação</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-release-microphone" class="btn btn-warning" disabled>Reconfigurar Microfone</button>
+                                                </td>
+                                                <td>
+                                                    <button id="btn-download-recording" class="btn btn-dark" disabled>Download</button>
+                                                </td>
+                                                <td>
+                                                    <div><audio controls autoplay playsinline></audio></div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--[ Recent Users ] end-->
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
         </div>
-        {% include 'professor/screens/audio_collect.html' %}
     </div>
 </div>
+
 
 {% endblock content %}
 

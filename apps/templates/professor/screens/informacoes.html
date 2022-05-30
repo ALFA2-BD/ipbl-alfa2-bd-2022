@@ -7,7 +7,40 @@
 
 {% block content %}
 
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="d-flex justify-content-center">
+                    <!--[ Recent Users ] start-->
+                    <div class="col-xl-8 col-md-6">
+                        <div class="card Recent-Users">
+                            <div class="card-header">
+                                <h5>Informações do Professor <i>{{ professor.nome.pnome }} {{ professor.nome.snome }}</i></h5>
+                            </div>
+                            <div class="card-block px-0 py-3">
+                                <div class="table-responsive">
+                                    <div class="card-body">
+                                        <h5>Nome Completo</h5>
+                                        <p>{{ professor.nome.pnome }} {{ professor.nome.snome }}</p>
 
+                                        <h5>CPF</h5>
+                                        <p>{{ professor.cpf }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--[ Recent Users ] end-->
+
+
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
 

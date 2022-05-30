@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('turmas', views.turmas, name='professor'),
     path('alunos', views.alunos, name='professor'),
+
     path('coleta', views.coleta, name='professor'),
 
     path('banco_frases', views.banco_frases, name='professor'),

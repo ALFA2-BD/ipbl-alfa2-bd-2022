@@ -7,6 +7,58 @@
 
 {% block content %}
 
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="d-flex justify-content-center">
+                    <!-- [ basic-table ] start -->
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Tabela de Frases</h5>
+                                <span class="d-block m-t-5">Frases no banco de frases para o professor</span>
+                            </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Frase</th>
+                                                <th>Tipo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for frase in frases %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }}</th>
+                                                    <td>{{ frase.frase }}</td>
+                                                    {% if frase.tipo == 1 %}
+                                                        <td>Palavras Aleatórias</td>
+                                                    {% elif frase.tipo == 2 %}
+                                                        <td>Palavras Simples</td>
+                                                    {% elif frase.tipo == 3 %}
+                                                        <td>Palavras</td>
+                                                    {% else %}
+                                                        <td>Tipo não Registrado</td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ basic-table ] end -->
+                </div>
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {% endblock content %}

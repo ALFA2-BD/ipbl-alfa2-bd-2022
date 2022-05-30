@@ -4,6 +4,7 @@ from django.template import loader
 from django.urls import reverse
 from django.shortcuts import redirect
 from dataset.ScriptsMongoDB import ScriptsMongoDB
+from utils.DictHelper import DictHelper
 import json
 
 def login(request):
@@ -54,12 +55,37 @@ def coleta(request):
     return HttpResponse(html_template.render(context, request))
 
 def banco_frases(request):
-    context = {'segment': 'banco_frases'}
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    frases = scripts_mongodb.get_collection_data(collection_name='frases')
+
+    scripts_mongodb.close_connection()
+
+    context = {
+        'segment': 'banco_frases',
+        'frases': frases
+    }
+
     html_template = loader.get_template('professor/screens/banco_frases.html')
     return HttpResponse(html_template.render(context, request))
 
 def informacoes(request):
-    context = {'segment': 'informacoes'}
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    professor = scripts_mongodb.get_data_find(
+        collection_name='professores',
+        filter = {'cpf': '123.870.496-40'}
+    )[0]
+
+    scripts_mongodb.close_connection()
+
+    context = {
+        'segment': 'informacoes',
+        'professor': professor,
+    }
+
     html_template = loader.get_template('professor/screens/informacoes.html')
     return HttpResponse(html_template.render(context, request))
 

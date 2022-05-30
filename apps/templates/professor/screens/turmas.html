@@ -8,54 +8,52 @@
 {% block content %}
 
 <div class="pcoded-content">
-        <div class="pcoded-inner-content">
-            <div class="main-body">
-                <div class="page-wrapper">
-                    <!-- [ Main Content ] start -->
-                    <div class="d-flex justify-content-center">
-                        <!--[ Recent Users ] start-->
-                        <div class="col-xl-8 col-md-6">
-                            <div class="card Recent-Users">
-                                <div class="card-header">
-                                    <h5>Turmas</h5>
-                                </div>
-                                <div class="card-block px-0 py-3">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <tbody>
-                                                {% for turma in turmas %}
-                                                    <tr class="unread">
-                                                        <td><img class="rounded-circle" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user"></td>
-                                                        <td>
-                                                            <h6 class="mb-1"> Turma de {{ turma.ano }}</h6>
-                                                            <p class="m-0">{{ turma.ano_escolar }}° Ano Escolar</p>
-                                                        </td>
-                                                        <td>
-                                                            <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{ turma.quant_alu }} Alunos</h6>
-                                                        </td>
-                                                        <td>
-                                                            <form action="/professor/alunos" method="POST">
-                                                                {% csrf_token %}
-                                                                <button class="btn btn-primary" type="submit" name="alunos" value="{{turma.alunos}}" class="button store-button">Lista de Alunos</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor%}
-                                            </tbody>
-                                        </table>
-                                    </div>
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="d-flex justify-content-center">
+                    <!--[ Recent Users ] start-->
+                    <div class="col-xl-8 col-md-6">
+                        <div class="card Recent-Users">
+                            <div class="card-header">
+                                <h5>Turmas</h5>
+                            </div>
+                            <div class="card-block px-0 py-3">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            {% for turma in turmas %}
+                                                <tr class="unread">
+                                                    <td><img class="rounded-circle" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user"></td>
+                                                    <td>
+                                                        <h6 class="mb-1"> Turma de {{ turma.ano }}</h6>
+                                                        <p class="m-0">{{ turma.ano_escolar }}° Ano Escolar</p>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{ turma.quant_alu }} Alunos</h6>
+                                                    </td>
+                                                    <td>
+                                                        <form action="/professor/alunos" method="POST">
+                                                            {% csrf_token %}
+                                                            <button class="btn btn-primary" type="submit" name="alunos" value="{{turma.alunos}}" class="button store-button">Lista de Alunos</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endfor%}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <!--[ Recent Users ] end-->
-
-
                     </div>
-                    <!-- [ Main Content ] end -->
+                    <!--[ Recent Users ] end-->
                 </div>
+                <!-- [ Main Content ] end -->
             </div>
         </div>
     </div>
+</div>
 
 {% endblock content %}
 
