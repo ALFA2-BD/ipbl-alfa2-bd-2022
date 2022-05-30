@@ -87,6 +87,7 @@ def main(*args, **kwargs):
 
         collection_professores.bulk_write(obj_professores)
 
+
     ### Fake Gestores ###
 
     if delete_elements_before:
@@ -113,6 +114,28 @@ def main(*args, **kwargs):
 
         collection_gestores.bulk_write(obj_gestores)
 
+    ### Fake Gestores Admin
+
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='gestor_admin')
+
+    if scripts_mongodb.number_elements_collection(collection_name='gestor_admin') == 0:
+        obj_gestores_admin = []
+        gestores = scripts_mongodb.get_collection_data(collection_name = 'gestores')
+        for i in range(number_of_examples - 1):
+            json_gestor = {
+                'nome': fake.first_name(),
+                'sobrenome' : fake.last_name(),
+                'gestor_escola' : [
+                    gestores[i],
+                    gestores[i+1]
+                ]
+            }
+            obj_gestores_admin.append(InsertOne(json_gestor))
+        collection_gestores_admin = scripts_mongodb.db['gestores_admin']
+
+        collection_gestores_admin.bulk_write(obj_gestores_admin)
+        
 if __name__ == '__main__':
 
     config = {
