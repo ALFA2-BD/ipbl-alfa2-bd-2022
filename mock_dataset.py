@@ -24,7 +24,7 @@ def main(*args, **kwargs):
 
         obj_frases = []
 
-        for _ in range(number_of_examples):
+        for i in range(number_of_examples):
             json_frase = {
                 'frase': fake.catch_phrase(),
                 'tipo': randint(1, 3)
@@ -35,7 +35,91 @@ def main(*args, **kwargs):
 
         collection_frases.bulk_write(obj_frases)
 
-    ### Fake Professor ###
+### Fake Avaliacoes ###
+
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='avaliacoes')
+
+    if scripts_mongodb.number_elements_collection(collection_name='avaliacoes') == 0:
+
+        obj_avaliacoes = []
+        frases = scripts_mongodb.get_collection_data(collection_name = 'frases')
+        # TODO: add aluno, prof and audios
+        for i in range(number_of_examples):
+
+            json_avaliacoes = {
+                'avaliacoes':[
+                    {
+                        'data':fake.date(),
+                        'coleta': [
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            },
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            },
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            }
+                        ]
+                    },
+                    {
+                        'data':fake.date(),
+                        'coleta': [
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            },
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            },
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            }
+                        ]
+                    },
+                    {
+                        'data':fake.date(),
+                        'coleta': [
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            },
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            },
+                            {
+                                'audio': None,
+                                'metrica': uniform(0,10),
+                                'frase': frases[randint(0,number_of_examples-1)]
+                            }
+                        ]
+                    }
+                ],
+                'aluno': None,
+                'professor' : None
+            }
+            obj_avaliacoes.append(InsertOne(json_avaliacoes))
+
+        collection_avaliacoes = scripts_mongodb.db['avaliacoes']
+
+        collection_avaliacoes.bulk_write(obj_avaliacoes)
+
+### Fake Professores ###
 
     if delete_elements_before:
         scripts_mongodb.delete_elements_from_collection(collection_name='professores')
@@ -43,49 +127,148 @@ def main(*args, **kwargs):
     if scripts_mongodb.number_elements_collection(collection_name='professores') == 0:
 
         obj_professores = []
+        # TODO: add turma
+        for i in range(number_of_examples - 1):
 
-        for _ in range(number_of_examples):
             json_professores = {
-                'cpf':fake.cpf(),
-                'nome': {
-                    'pnome': fake.first_name(),
-                    'snome': fake.last_name()
-                },
-                'senha': '12345',
-                'escola': 'Escola ' + fake.bairro(),
+                'nome': fake.first_name(),
+                'sobrenome': fake.last_name(),
+                'hash_senha' : 1234,
+                'turma' : None
             }
-
-            obj_turmas = []
-
-            for _ in range(randint(1, number_of_examples)):
-                json_turmas = {
-                    'ano': randint(2000, 2040),
-                    'ano_escolar': randint(1,9),
-                }
-
-                obj_alunos = []
-
-                for _ in range(randint(1, number_of_examples)):
-                    json_aluno = {
-                        'nome': {
-                            'pnome': fake.first_name(),
-                            'snome': fake.last_name()
-                        },
-                        'idade': randint(7, 12)
-                    }
-                    obj_alunos.append(json_aluno)
-
-                json_turmas['alunos'] = obj_alunos
-
-                obj_turmas.append(json_turmas)
-
-            json_professores['turmas'] = obj_turmas
-
             obj_professores.append(InsertOne(json_professores))
 
         collection_professores = scripts_mongodb.db['professores']
 
         collection_professores.bulk_write(obj_professores)
+
+### Fake Alunos ###
+
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='alunos')
+
+    if scripts_mongodb.number_elements_collection(collection_name='alunos') == 0:
+
+        obj_alunos = []
+        avaliacoes = scripts_mongodb.get_collection_data(collection_name = 'avaliacoes')
+        # TODO: add turma
+        for i in range(number_of_examples):
+
+            json_alunos = {
+                'nome': fake.first_name(),
+                'sobrenome': fake.last_name(),
+                'tipo': randint(1,3),
+                'avaliacao' : avaliacoes[i],
+                'turma' : None
+            }
+            obj_alunos.append(InsertOne(json_alunos))
+
+        collection_alunos = scripts_mongodb.db['alunos']
+
+        collection_alunos.bulk_write(obj_alunos)
+
+
+### Fake Turmas ###
+
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='turmas')
+
+    if scripts_mongodb.number_elements_collection(collection_name='turmas') == 0:
+
+        obj_turmas = []
+        alunos = scripts_mongodb.get_collection_data(collection_name = 'alunos')
+        profs = scripts_mongodb.get_collection_data(collection_name = 'professores')
+
+        for i in range(number_of_examples - 1):
+
+            json_turmas = {
+                'ano': randint(2022, 2025),
+                'ano_escolar': randint(1,6),
+                'nome_provedor': fake.name(),
+                'alunos' : [
+                    alunos[i],
+                    alunos[i+1]
+                ],
+                'professor' : profs[i]
+            }
+            obj_turmas.append(InsertOne(json_turmas))
+
+        collection_turmas = scripts_mongodb.db['turmas']
+
+        collection_turmas.bulk_write(obj_turmas)
+
+### Fake Infraestruturas ###
+
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='infraestruturas')
+
+    if scripts_mongodb.number_elements_collection(collection_name='infraestruturas') == 0:
+
+        obj_infras = []
+        #TODO: ADD escolas (many to many)
+
+        for i in range(number_of_examples):
+
+            json_infras = {
+                'nome': fake.cryptocurrency_code(),
+                'nvl_gov': randint(1,3),
+                'nome_provedor': fake.name(),
+                'node' : [
+                    {
+                        'ip': fake.ipv4(),
+                        'port': fake.port_number(is_system = True)
+                    },
+                    {
+                        'ip': fake.ipv4(),
+                        'port': fake.port_number(is_system = True)
+                    }
+                ],
+                'escolas' : []
+            }
+            obj_infras.append(InsertOne(json_infras))
+
+        collection_infras = scripts_mongodb.db['infraestruturas']
+
+        collection_infras.bulk_write(obj_infras)
+
+
+    ### Fake Escolas ###
+
+    if delete_elements_before:
+        scripts_mongodb.delete_elements_from_collection(collection_name='escolas')
+
+    if scripts_mongodb.number_elements_collection(collection_name='escolas') == 0:
+
+        obj_escolas = []
+        infras = scripts_mongodb.get_collection_data(collection_name = 'infraestruturas')
+        turmas = scripts_mongodb.get_collection_data(collection_name = 'turmas')
+
+        for i in range(number_of_examples - 2):
+
+            json_escola = {
+                'codigo_inep' : randint(10000000, 99999999),
+                'nome': 'Escola' + fake.last_name(),
+                'uf': fake.estado()[0],
+                'cep': fake.postcode(False),
+                'endereco': fake.address(),
+                'municipio': fake.city(),
+                'hash_senha': 1234,
+                'categ_admin': randint(1,2),
+                'depen_admin': randint(1,3),
+                'infraestruturas' : [
+                    infras[i],
+                    infras[i+1]
+                ],
+                'turmas' : [
+                    turmas[i],
+                    turmas[i+1]
+                ]
+            }
+            obj_escolas.append(InsertOne(json_escola))
+
+        collection_escolas = scripts_mongodb.db['escolas']
+
+        collection_escolas.bulk_write(obj_escolas)
 
 
     ### Fake Gestores ###
@@ -96,16 +279,18 @@ def main(*args, **kwargs):
     if scripts_mongodb.number_elements_collection(collection_name='gestores') == 0:
 
         obj_gestores = []
-
-        for _ in range(number_of_examples):
+        escolas = scripts_mongodb.get_collection_data(collection_name = 'escolas')
+        for i in range(number_of_examples - 3):
 
             json_gestor = {
-                'nome': {
-                    'pnome': fake.first_name(),
-                    'snome': fake.last_name()
-                },
-                'nivel': randint(1, 3),
-                'eh_admin': False,
+                'nome': fake.first_name(),
+                'sobrenome': fake.last_name(),
+                'identificador': fake.cpf(),
+                'hash_senha' : 1234,
+                'escolas' : [
+                    escolas[i],
+                    escolas[i+1]
+                ]
             }
 
             obj_gestores.append(InsertOne(json_gestor))
@@ -122,20 +307,21 @@ def main(*args, **kwargs):
     if scripts_mongodb.number_elements_collection(collection_name='gestor_admin') == 0:
         obj_gestores_admin = []
         gestores = scripts_mongodb.get_collection_data(collection_name = 'gestores')
-        for i in range(number_of_examples - 1):
-            json_gestor = {
+        for i in range(number_of_examples - 4):
+            json_gestor_admin = {
                 'nome': fake.first_name(),
                 'sobrenome' : fake.last_name(),
                 'gestor_escola' : [
                     gestores[i],
                     gestores[i+1]
-                ]
+                ],
+                'hash_senha' : 1234
             }
-            obj_gestores_admin.append(InsertOne(json_gestor))
+            obj_gestores_admin.append(InsertOne(json_gestor_admin))
         collection_gestores_admin = scripts_mongodb.db['gestores_admin']
 
         collection_gestores_admin.bulk_write(obj_gestores_admin)
-        
+
 if __name__ == '__main__':
 
     config = {
