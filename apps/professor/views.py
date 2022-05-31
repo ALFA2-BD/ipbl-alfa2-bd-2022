@@ -8,7 +8,9 @@ from utils.DictHelper import DictHelper
 import json
 
 def login(request):
-    context = {'segment': 'login'}
+    context = {
+        'segment': 'login'
+    }
     html_template = loader.get_template('professor/screens/login.html')
     return HttpResponse(html_template.render(context, request))
 
@@ -24,7 +26,9 @@ def verify_login(request):
 
         professor = scripts_mongodb.get_data_find(
             collection_name='professores',
-            filter = {'cpf': '123.870.496-40'}
+            filter = {
+                'identificador': identificador_professor
+            }
         )[0]
 
         scripts_mongodb.close_connection()

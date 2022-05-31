@@ -4,12 +4,14 @@ from random import randint, uniform, choices
 from datetime import datetime, timedelta
 from dataset.ScriptsMongoDB import ScriptsMongoDB
 from pymongo import InsertOne
+from utils.CryptoHelper import CryptoHelper
 
 def main(*args, **kwargs):
 
     locate = 'pt_BR' if 'locate' not in kwargs else kwargs['locate']
     number_of_examples = 10 if 'number_of_examples' not in kwargs else kwargs['number_of_examples']
     delete_elements_before = False if 'delete_elements_before' not in kwargs else kwargs['delete_elements_before']
+    crypto = CryptoHelper()
 
     fake = Faker(locale=locate)
 
@@ -131,9 +133,10 @@ def main(*args, **kwargs):
         for i in range(number_of_examples - 1):
 
             json_professores = {
+                'identificador': fake.cpf(),
                 'nome': fake.first_name(),
                 'sobrenome': fake.last_name(),
-                'hash_senha' : 1234,
+                'hash_senha' : crypto.encrypt_message('1234'),
                 'turma' : None
             }
             obj_professores.append(InsertOne(json_professores))
@@ -252,7 +255,7 @@ def main(*args, **kwargs):
                 'cep': fake.postcode(False),
                 'endereco': fake.address(),
                 'municipio': fake.city(),
-                'hash_senha': 1234,
+                'hash_senha': crypto.encrypt_message('1234'),
                 'categ_admin': randint(1,2),
                 'depen_admin': randint(1,3),
                 'infraestruturas' : [
@@ -286,7 +289,7 @@ def main(*args, **kwargs):
                 'nome': fake.first_name(),
                 'sobrenome': fake.last_name(),
                 'identificador': fake.cpf(),
-                'hash_senha' : 1234,
+                'hash_senha' : crypto.encrypt_message('1234'),
                 'escolas' : [
                     escolas[i],
                     escolas[i+1]
@@ -309,13 +312,14 @@ def main(*args, **kwargs):
         gestores = scripts_mongodb.get_collection_data(collection_name = 'gestores')
         for i in range(number_of_examples - 4):
             json_gestor_admin = {
+                'identificador': fake.cpf(),
                 'nome': fake.first_name(),
                 'sobrenome' : fake.last_name(),
                 'gestor_escola' : [
                     gestores[i],
                     gestores[i+1]
                 ],
-                'hash_senha' : 1234
+                'hash_senha' : crypto.encrypt_message('1234')
             }
             obj_gestores_admin.append(InsertOne(json_gestor_admin))
         collection_gestores_admin = scripts_mongodb.db['gestores_admin']
