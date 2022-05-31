@@ -302,9 +302,9 @@ def main(*args, **kwargs):
     ### Fake Gestores Admin
 
     if delete_elements_before:
-        scripts_mongodb.delete_elements_from_collection(collection_name='gestor_admin')
+        scripts_mongodb.delete_elements_from_collection(collection_name='gestores_admin')
 
-    if scripts_mongodb.number_elements_collection(collection_name='gestor_admin') == 0:
+    if scripts_mongodb.number_elements_collection(collection_name='gestores_admin') == 0:
         obj_gestores_admin = []
         gestores = scripts_mongodb.get_collection_data(collection_name = 'gestores')
         for i in range(number_of_examples - 4):
