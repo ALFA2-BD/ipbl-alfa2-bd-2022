@@ -27,15 +27,21 @@
                                                     <tr class="unread">
                                                         <td><img class="rounded-circle" style="width:40px;" src="/static/assets/images/user/avatar-1.jpg" alt="activity-user"></td>
                                                         <td>
-                                                            <h6 class="mb-1">{{ aluno.nome.pnome }} {{ aluno.nome.snome }}</h6>
+                                                            <h6 class="mb-1">{{ aluno.nome }} {{ aluno.sobrenome }}</h6>
                                                         </td>
-                                                        <td>
-                                                            <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{ aluno.idade }} anos</h6>
-                                                        </td>
+                                                        {% if aluno.tipo == 1 %}
+                                                        <td><p class="text-success mb-1">Normal</p></td>
+                                                        {% elif aluno.tipo == 2 %}
+                                                            <td><p class="text-warning mb-1">Especial</p></td>
+                                                        {% elif aluno.tipo == 3 %}
+                                                            <td><p class="text-danger mb-1">Superdotado</p></td>
+                                                        {% else %}
+                                                            <td><p class="text-dark mb-1">Tipo não Registrado</p></td>
+                                                        {% endif %}
                                                         <td>
                                                             <form action="/professor/coleta" method="POST">
                                                                 {% csrf_token %}
-                                                                <button class="btn btn-primary" type="submit" name="aluno" value="{{aluno}}" class="button store-button">Coletar Audio</button>
+                                                                <button class="btn btn-primary" type="submit" name="id_aluno" value="{{aluno.id_aluno}}" class="button store-button">Coletar Audio</button>
                                                             </form>
                                                         </td>
                                                     </tr>

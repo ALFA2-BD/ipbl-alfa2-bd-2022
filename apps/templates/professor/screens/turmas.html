@@ -36,7 +36,7 @@
                                                     <td>
                                                         <form action="/professor/alunos" method="POST">
                                                             {% csrf_token %}
-                                                            <button class="btn btn-primary" type="submit" name="alunos" value="{{turma.alunos}}" class="button store-button">Lista de Alunos</button>
+                                                            <button class="btn btn-primary" type="submit" name="id_turma" value="{{turma.id_turma}}" class="button store-button">Lista de Alunos</button>
                                                         </form>
                                                     </td>
                                                 </tr>

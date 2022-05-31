@@ -36,13 +36,13 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <td>{{ frase.frase }}</td>
                                                     {% if frase.tipo == 1 %}
-                                                        <td>Palavras Aleatórias</td>
+                                                        <td><p class="text-success mb-1">Palavras Aleatórias</p></td>
                                                     {% elif frase.tipo == 2 %}
-                                                        <td>Palavras Simples</td>
+                                                        <td><p class="text-warning mb-1">Palavras Simples</p></td>
                                                     {% elif frase.tipo == 3 %}
-                                                        <td>Palavras</td>
+                                                        <td><p class="text-danger mb-1">Pseudo Palavras</p></td>
                                                     {% else %}
-                                                        <td>Tipo não Registrado</td>
+                                                        <td><p class="text-dark mb-1">Tipo não Registrado</p></td>
                                                     {% endif %}
                                                 </tr>
                                             {% endfor %}
