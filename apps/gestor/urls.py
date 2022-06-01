@@ -3,6 +3,8 @@ from apps.gestor import views
 
 urlpatterns = [
     path('login', views.login, name='gestor'),
+    path('verify_login', views.verify_login, name='gestor'),
+
     path('home', views.home, name='gestor'),
     path('informacoes', views.informacoes, name='gestor'),
     path('escolas', views.escolas, name='gestor'),

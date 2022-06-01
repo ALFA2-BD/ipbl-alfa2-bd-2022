@@ -30,14 +30,23 @@
                     <br />
                     <br />
 
-                    <form role="form" action="/gestor/home">
-
+                    <form role="form" action="/gestor/verify_login" method="post">
+                        {% csrf_token %}
                         <div class="input-group mb-3">
-                            <input class="form-control" placeholder="Identificador Gestor">
+                            <input
+                                class="form-control"
+                                placeholder="Identificador Gestor"
+                                name="identificador_gestor"
+                            >
                         </div>
 
                         <div class="input-group mb-4">
-                            <input type="password" class="form-control" placeholder="Senha Gestor">
+                            <input
+                                type="password"
+                                class="form-control"
+                                placeholder="Senha Gestor"
+                                name="senha_gestor"
+                            >
                         </div>
 
                         <button name="login" class="btn btn-primary shadow-2 mb-4">Entrar</button>
