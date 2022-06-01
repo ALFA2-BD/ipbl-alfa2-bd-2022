@@ -6,6 +6,7 @@ from utils.DictHelper import DictHelper
 from utils.CryptoHelper import CryptoHelper
 from bson.objectid import ObjectId
 import json
+from random import randint
 
 def login(request):
     context = {
@@ -84,12 +85,38 @@ def coleta(request):
     aluno = scripts_mongodb.db['alunos'].find_one(ObjectId(id_aluno))
     professor = scripts_mongodb.db['professores'].find_one({'identificador': identificador})
 
+    frases_tipo_1 = scripts_mongodb.get_data_find(
+        collection_name='frases',
+        filter = {
+            'tipo': 1
+        }
+    )
+    frases_tipo_2 = scripts_mongodb.get_data_find(
+        collection_name='frases',
+        filter = {
+            'tipo': 2
+        }
+    )
+    frases_tipo_3 = scripts_mongodb.get_data_find(
+        collection_name='frases',
+        filter = {
+            'tipo': 3
+        }
+    )
+
+    frases = {
+        'tipo_1': frases_tipo_1[randint(0, len(frases_tipo_1)-1)],
+        'tipo_2': frases_tipo_2[randint(0, len(frases_tipo_2)-1)],
+        'tipo_3': frases_tipo_3[randint(0, len(frases_tipo_3)-1)],
+    }
+
     scripts_mongodb.close_connection()
 
     context = {
         'segment': 'coleta',
         'professor': professor,
-        'aluno': aluno
+        'aluno': aluno,
+        'frases': frases
     }
 
     identificador = request.COOKIES.get('identificador')
@@ -98,6 +125,14 @@ def coleta(request):
 
     response = HttpResponse(html_template.render(context, request))
     response.set_cookie('identificador', identificador)
+
+    return response
+
+def submit_audios(request):
+
+    print(request.POST)
+
+    response = HttpResponse(json.dumps(request.POST), content_type="application/json")
 
     return response
 

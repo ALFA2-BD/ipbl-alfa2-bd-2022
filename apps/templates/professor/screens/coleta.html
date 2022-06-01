@@ -23,6 +23,8 @@
                                 <p class="text-dark mb-1">Professor</p>
                                 <p>{{ professor.nome }} {{ professor.sobrenome }}</p>
                             </div>
+                            <div id="msg"></div>
+
                             <div class="card-block px-0 py-3">
                                 <div class="table-responsive">
                                     <table class="table table-hover">
@@ -30,68 +32,71 @@
                                             <tr class="unread">
                                                 <td>
                                                     <h6 class="mb-1">Frase Simples</h6>
-                                                    <p class="m-0">alkjdlaskdjlkasdjlk</p>
+                                                    <p class="m-0">{{ frases.tipo_1.frase }}</p>
                                                 </td>
                                                 <td>
-                                                    <button id="btn-start-recording" class="btn btn-primary">Iniciar Gravação</button>
+                                                    <div class="d-grid gap-3">
+                                                        <button id="record1" class="btn btn-primary center">
+                                                            <div class="i-block" data-clipboard-text="feather icon-play" data-filter="icon-play" data-toggle="tooltip" title="" data-original-title="Iniciar Gravação" style=""><i class="feather icon-play"></i></div>
+                                                        </button>
+                                                        <button id="stop1" class="btn btn-danger" disabled>
+                                                            <div class="i-block" data-clipboard-text="feather icon-stop-circle" data-filter="icon-stop-circle" data-toggle="tooltip" title="" data-original-title="Parar Gravação" style=""><i class="feather icon-stop-circle"></i></div>
+                                                        </button>
+                                                        <select class="btn btn-secondary dropdown-toggle dropdown-toggle-split" name="" id="micSelect1"></select>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <button id="btn-stop-recording" class="btn btn-danger" disabled>Parar Gravação</button>
-                                                </td>
-                                                <td>
-                                                    <button id="btn-release-microphone" class="btn btn-warning" disabled>Reconfigurar Microfone</button>
-                                                </td>
-                                                <td>
-                                                    <button id="btn-download-recording" class="btn btn-dark" disabled>Download</button>
-                                                </td>
-                                                <td>
-                                                    <div><audio controls autoplay playsinline></audio></div>
-                                                </td>
-                                            </tr>
-                                            <tr class="unread">
-                                                <td>
-                                                    <h6 class="mb-1">Frase Simples</h6>
-                                                    <p class="m-0">alkjdlaskdjlkasdjlk</p>
-                                                </td>
-                                                <td>
-                                                    <button id="btn-start-recording" class="btn btn-primary">Iniciar Gravação</button>
-                                                </td>
-                                                <td>
-                                                    <button id="btn-stop-recording" class="btn btn-danger" disabled>Parar Gravação</button>
-                                                </td>
-                                                <td>
-                                                    <button id="btn-release-microphone" class="btn btn-warning" disabled>Reconfigurar Microfone</button>
-                                                </td>
-                                                <td>
-                                                    <button id="btn-download-recording" class="btn btn-dark" disabled>Download</button>
-                                                </td>
-                                                <td>
-                                                    <div><audio controls autoplay playsinline></audio></div>
+                                                    <div><audio controls autoplay playsinline id="audio1" ></audio></div>
                                                 </td>
                                             </tr>
                                             <tr class="unread">
                                                 <td>
-                                                    <h6 class="mb-1">Frase Simples</h6>
-                                                    <p class="m-0">alkjdlaskdjlkasdjlk</p>
+                                                    <h6 class="mb-1">Frase Complexas</h6>
+                                                    <p class="m-0">{{ frases.tipo_2.frase }}</p>
                                                 </td>
                                                 <td>
-                                                    <button id="btn-start-recording" class="btn btn-primary">Iniciar Gravação</button>
+                                                    <div class="d-grid gap-3">
+                                                        <button id="record2" class="btn btn-primary center">
+                                                            <div class="i-block" data-clipboard-text="feather icon-play" data-filter="icon-play" data-toggle="tooltip" title="" data-original-title="Iniciar Gravação" style=""><i class="feather icon-play"></i></div>
+                                                        </button>
+                                                        <button id="stop2" class="btn btn-danger" disabled>
+                                                            <div class="i-block" data-clipboard-text="feather icon-stop-circle" data-filter="icon-stop-circle" data-toggle="tooltip" title="" data-original-title="Parar Gravação" style=""><i class="feather icon-stop-circle"></i></div>
+                                                        </button>
+                                                        <select class="btn btn-secondary dropdown-toggle dropdown-toggle-split" name="" id="micSelect2"></select>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <button id="btn-stop-recording" class="btn btn-danger" disabled>Parar Gravação</button>
+                                                    <div><audio controls autoplay playsinline id="audio2" ></audio></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="unread">
+                                                <td>
+                                                    <h6 class="mb-1">Pseudo Palavras</h6>
+                                                    <p class="m-0">{{ frases.tipo_3.frase }}</p>
                                                 </td>
                                                 <td>
-                                                    <button id="btn-release-microphone" class="btn btn-warning" disabled>Reconfigurar Microfone</button>
+                                                    <div class="d-grid gap-3">
+                                                        <button id="record3" class="btn btn-primary center">
+                                                            <div class="i-block" data-clipboard-text="feather icon-play" data-filter="icon-play" data-toggle="tooltip" title="" data-original-title="Iniciar Gravação" style=""><i class="feather icon-play"></i></div>
+                                                        </button>
+                                                        <button id="stop3" class="btn btn-danger" disabled>
+                                                            <div class="i-block" data-clipboard-text="feather icon-stop-circle" data-filter="icon-stop-circle" data-toggle="tooltip" title="" data-original-title="Parar Gravação" style=""><i class="feather icon-stop-circle"></i></div>
+                                                        </button>
+                                                        <select class="btn btn-secondary dropdown-toggle dropdown-toggle-split" name="" id="micSelect3"></select>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <button id="btn-download-recording" class="btn btn-dark" disabled>Download</button>
-                                                </td>
-                                                <td>
-                                                    <div><audio controls autoplay playsinline></audio></div>
+                                                    <div><audio controls autoplay playsinline id="audio3" ></audio></div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="d-flex justify-content-center">
+                                        <form role="form" action="/professor/submit_audios" method="post">
+                                            {% csrf_token %}
+                                            <button name="audios" class="btn btn-primary shadow-2 mb-4">Submeter Audios</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
