@@ -1,8 +1,6 @@
 import json
-from pydoc import doc
 from pymongo import MongoClient, InsertOne
 from dotenv import load_dotenv
-from bson.objectid import ObjectId
 import os
 
 class ScriptsMongoDB:
@@ -27,9 +25,6 @@ class ScriptsMongoDB:
 
         self.db = self.client[dbname]
 
-    def create_id(self):
-        return ObjectId()
-        
     def send_json_to_db(self, *args, **kwargs)->None:
 
         if 'path_json' in kwargs and 'collection_name' in kwargs:
@@ -82,17 +77,6 @@ class ScriptsMongoDB:
             return collection_name in list_of_collection
 
         return False
-
-    def get_collection(self, *args, **kwargs):
-        collection_name = kwargs['collection_name']
-
-        return_limit = 100 if 'return_limit' not in kwargs else kwargs['return_limit']
-
-        if self.verify_collection_in_db(**kwargs):
-
-            documents = self.db.get_collection(collection_name).find({}).limit(return_limit)
-            return documents
-
 
     def get_collection_data(self, *args, **kwargs):
 

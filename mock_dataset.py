@@ -9,7 +9,7 @@ from utils.CryptoHelper import CryptoHelper
 def main(*args, **kwargs):
 
     locate = 'pt_BR' if 'locate' not in kwargs else kwargs['locate']
-    number_of_profs = 10 if 'number_of_examples' not in kwargs else kwargs['number_of_examples']
+    number_of_examples = 10 if 'number_of_examples' not in kwargs else kwargs['number_of_examples']
     delete_elements_before = False if 'delete_elements_before' not in kwargs else kwargs['delete_elements_before']
     crypto = CryptoHelper()
 
@@ -26,7 +26,7 @@ def main(*args, **kwargs):
 
         obj_frases = []
 
-        for i in range(number_of_profs):
+        for i in range(number_of_examples):
             json_frase = {
                 'frase': fake.catch_phrase(),
                 'tipo': randint(1, 3)
@@ -47,7 +47,7 @@ def main(*args, **kwargs):
         obj_avaliacoes = []
         frases = scripts_mongodb.get_collection_data(collection_name = 'frases')
         # TODO: add aluno, prof and audios
-        for i in range(2 *number_of_profs):
+        for i in range(number_of_examples):
 
             json_avaliacoes = {
                 'avaliacoes':[
@@ -57,17 +57,17 @@ def main(*args, **kwargs):
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             },
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             },
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             }
                         ]
                     },
@@ -77,17 +77,17 @@ def main(*args, **kwargs):
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             },
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             },
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             }
                         ]
                     },
@@ -97,17 +97,17 @@ def main(*args, **kwargs):
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             },
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             },
                             {
                                 'audio': None,
                                 'metrica': uniform(0,10),
-                                'frase': frases[randint(0,number_of_profs-1)]
+                                'frase': frases[randint(0,number_of_examples-1)]
                             }
                         ]
                     }
@@ -129,22 +129,17 @@ def main(*args, **kwargs):
     if scripts_mongodb.number_elements_collection(collection_name='professores') == 0:
 
         obj_professores = []
-        avaliacoes = scripts_mongodb.get_collection_data(collection_name = 'avaliacoes')
-        for i in range(number_of_profs):
-            id = scripts_mongodb.create_id()
+        # TODO: add turma
+        for i in range(number_of_examples - 1):
+
             json_professores = {
-                '_id': id,
                 'identificador': fake.cpf(),
                 'nome': fake.first_name(),
                 'sobrenome': fake.last_name(),
                 'hash_senha' : crypto.encrypt_message('1234'),
-                'turma' : []
+                'turma' : None
             }
             obj_professores.append(InsertOne(json_professores))
-
-            collection_avaliacoes.update_one({"_id": avaliacoes[i]['_id']},{"$set":{"professor":  id} })
-            collection_avaliacoes.update_one({"_id": avaliacoes[i + number_of_profs]['_id']},{"$set":{"professor":  id} })
-
 
         collection_professores = scripts_mongodb.db['professores']
 
@@ -159,21 +154,17 @@ def main(*args, **kwargs):
 
         obj_alunos = []
         avaliacoes = scripts_mongodb.get_collection_data(collection_name = 'avaliacoes')
-        for i in range(2*number_of_profs):
-            id = scripts_mongodb.create_id()
+        # TODO: add turma
+        for i in range(number_of_examples):
+
             json_alunos = {
-                '_id': id,
                 'nome': fake.first_name(),
                 'sobrenome': fake.last_name(),
                 'tipo': randint(1,3),
-                'avaliacao' : avaliacoes[i]['_id'],
-                'turma' : None #added later
+                'avaliacao' : avaliacoes[i],
+                'turma' : None
             }
             obj_alunos.append(InsertOne(json_alunos))
-
-            # updatingo avaliacoes
-            collection_avaliacoes.update_one({"_id": avaliacoes[i]['_id']},{"$set":{"aluno":  id} })
-
 
         collection_alunos = scripts_mongodb.db['alunos']
 
@@ -191,27 +182,19 @@ def main(*args, **kwargs):
         alunos = scripts_mongodb.get_collection_data(collection_name = 'alunos')
         profs = scripts_mongodb.get_collection_data(collection_name = 'professores')
 
-        for i in range(number_of_profs):
-            id = scripts_mongodb.create_id()
+        for i in range(number_of_examples - 1):
+
             json_turmas = {
-                '_id': id,
                 'ano': randint(2022, 2025),
                 'ano_escolar': randint(1,6),
                 'nome_provedor': fake.name(),
                 'alunos' : [
-                    alunos[i]['_id'],
-                    alunos[i+ number_of_profs]['_id']
+                    alunos[i],
+                    alunos[i+1]
                 ],
-                'professor' : profs[i]['_id']
+                'professor' : profs[i]
             }
             obj_turmas.append(InsertOne(json_turmas))
-            # adding turma to alunos
-            collection_alunos.update_one({"_id": alunos[i]['_id']},{"$set":{"turma":  id} })
-            collection_alunos.update_one({"_id": alunos[i +  number_of_profs]['_id']},{"$set":{"turma":  id} })
-
-            # adding turma to profs
-            collection_professores.update_one({"_id": profs[i]['_id']},{"$push":{"turma":  id} })
-
 
         collection_turmas = scripts_mongodb.db['turmas']
 
@@ -225,8 +208,9 @@ def main(*args, **kwargs):
     if scripts_mongodb.number_elements_collection(collection_name='infraestruturas') == 0:
 
         obj_infras = []
+        #TODO: ADD escolas (many to many)
 
-        for i in range(number_of_profs):
+        for i in range(number_of_examples):
 
             json_infras = {
                 'nome': fake.cryptocurrency_code(),
@@ -242,7 +226,7 @@ def main(*args, **kwargs):
                         'port': fake.port_number(is_system = True)
                     }
                 ],
-                'escolas' : [] # added later
+                'escolas' : []
             }
             obj_infras.append(InsertOne(json_infras))
 
@@ -262,10 +246,9 @@ def main(*args, **kwargs):
         infras = scripts_mongodb.get_collection_data(collection_name = 'infraestruturas')
         turmas = scripts_mongodb.get_collection_data(collection_name = 'turmas')
 
-        for i in range(number_of_profs - 1):
-            id = scripts_mongodb.create_id()
+        for i in range(number_of_examples - 2):
+
             json_escola = {
-                '_id': id,
                 'codigo_inep' : randint(10000000, 99999999),
                 'nome': 'Escola' + fake.last_name(),
                 'uf': fake.estado()[0],
@@ -286,10 +269,6 @@ def main(*args, **kwargs):
             }
             obj_escolas.append(InsertOne(json_escola))
 
-            # adding infra to escolas
-            collection_infras.update_one({"_id": infras[i]['_id']},{"$push":{"escolas":  id} })
-            collection_infras.update_one({"_id": infras[i+1]['_id']},{"$push":{"escolas":  id} })
-
         collection_escolas = scripts_mongodb.db['escolas']
 
         collection_escolas.bulk_write(obj_escolas)
@@ -304,7 +283,7 @@ def main(*args, **kwargs):
 
         obj_gestores = []
         escolas = scripts_mongodb.get_collection_data(collection_name = 'escolas')
-        for i in range(number_of_profs - 2):
+        for i in range(number_of_examples - 3):
 
             json_gestor = {
                 'nome': fake.first_name(),
@@ -331,7 +310,7 @@ def main(*args, **kwargs):
     if scripts_mongodb.number_elements_collection(collection_name='gestores_admin') == 0:
         obj_gestores_admin = []
         gestores = scripts_mongodb.get_collection_data(collection_name = 'gestores')
-        for i in range(number_of_profs - 3):
+        for i in range(number_of_examples - 4):
             json_gestor_admin = {
                 'identificador': fake.cpf(),
                 'nome': fake.first_name(),
