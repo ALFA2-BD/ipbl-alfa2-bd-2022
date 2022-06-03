@@ -88,3 +88,26 @@ Para visualzar o banco e ter controle sobre os dados o Django disponibiliza uma 
 Antes de acessar ela é importante criar um usuário admin. Para fazer isso, basta executar o comando `python manage.py createsuperuser`.
 
 Depois disso, basta entrar no link e visualizar a tela de admin.
+
+## Usando o MongoDB
+
+Para visualizar localmente os dados, pode-se utilizar o [MongoDB Compass](https://www.mongodb.com/pt-br/products/compass). Para se conectar ao banco, use a URI:
+```
+mongodb+srv://alfa2bd:alfa2bd@clusteralfa2bd.tirlce4.mongodb.net/?retryWrites=true&w=majority
+```
+
+Para gerar dados de exemplo, basta rodar o `mock_dataset.py`:
+
+```shell
+python mock_dataset.py
+```
+Os dados se encontrarão em `Databases/BaseAlfa2`. Para visualizar relações de dados, pode-se utilizar a seção `Aggregation` de cada collection. Basta selecionar o operador `$lookup` e gerar a Query. Por exemplo, na collection `turmas` o comando a seguir agrega os objetos `aluno` de cada turma à collection:
+
+```
+{
+  from: 'alunos',
+  localField: 'alunos',
+  foreignField: '_id',
+  as: 'objetosAlunos'
+}
+```
