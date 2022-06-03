@@ -7,7 +7,168 @@
 
 {% block content %}
 
-<iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-alfa2-bd-ufyhm/embed/charts?id=62927643-df81-496c-8051-6ee49b1ec929&maxDataAge=3600&theme=dark&autoRefresh=true%22%3E"</iframe>
+<div class="col-md-12" style="margin-bottom: 70px;text-align: center;margin-top: 20px;">
+    <div class="page-header-title">
+        <h3 class="m-b-10">Dashboard | Resumo de Coletas</h3>
+    </div>
+</div>
+<div style="margin: 0 auto;text-align: center;display: flex;flex-direction: row;justify-content: center;align-self: center;">
+    <div style="margin: 0 auto;display: flex;flex-direction: column;justify-content: center;align-content: center;width: 800px;">
+        <div class="card" style="border-radius: 20px;width: 100%;">
+            <div class="card-header">
+                <h5>Avaliação Diagnóstica por Escola</h5>
+            </div>
+            <div id="container" style="width: 90%;margin-top: 30px;margin-bottom: 50px;justify-content: center;align-self: center;">
+                <canvas id="bar-chart-av1"></canvas>
+            </div>
+        </div>
+        <div class="card" style="border-radius: 20px;width: 100%;">
+            <div class="card-header">
+                <h5>Avaliação Formativa de Processo por Escola</h5>
+            </div>
+            <div id="container" style="width: 90%;margin-top: 30px;margin-bottom: 50px;justify-content: center;align-self: center;">
+                <canvas id="bar-chart-av2"></canvas>
+            </div>
+        </div>
+        <div class="card" style="border-radius: 20px;width: 100%;">
+            <div class="card-header">
+                <h5>Avaliação Formativa de Saída por Escola</h5>
+            </div>
+            <div id="container" style="width: 90%;margin-top: 30px;margin-bottom: 50px;justify-content: center;align-self: center;">
+                <canvas id="bar-chart-av3"></canvas>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script>
+
+            const data1 = {
+                labels: {{ escolas_name_label|safe }},
+                datasets: [{label: 'Média Avaliação Diagnóstica',
+                    data: {{ mean_av1|safe }},
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var config1 = {
+                type: 'bar',
+                data: data1,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                },
+            };
+
+            const data2 = {
+                labels: {{ escolas_name_label|safe }},
+                datasets: [{label: 'Média Avaliação Formativa de Processo',
+                    data: {{ mean_av2|safe }},
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var config2 = {
+                type: 'bar',
+                data: data2,
+                options: {
+                    scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                    }
+                },
+            };
+
+            const data3 = {
+                labels: {{ escolas_name_label|safe }},
+                datasets: [{label: 'Média Avaliação Formativa de Saída',
+                    data: {{ mean_av3|safe }},
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var config3 = {
+                type: 'bar',
+                data: data3,
+                options: {
+                    scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                    }
+                },
+            };
+
+            window.onload = function() {
+                var ctx1 = document.getElementById('bar-chart-av1').getContext('2d');
+                window.myPie = new Chart(ctx1, config1);
+                var ctx2 = document.getElementById('bar-chart-av2').getContext('2d');
+                window.myPie = new Chart(ctx2, config2);
+                var ctx3 = document.getElementById('bar-chart-av3').getContext('2d');
+                window.myPie = new Chart(ctx3, config3);
+            };
+
+        </script>
+    </div>
+
+</div>
+
 
 {% endblock content %}
 

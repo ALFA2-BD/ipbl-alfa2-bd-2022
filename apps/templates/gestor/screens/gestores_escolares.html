@@ -7,7 +7,55 @@
 
 {% block content %}
 
+<div class="col-md-12" style="margin-bottom: 70px;text-align: center;margin-top: 20px;">
+    <div class="page-header-title">
+        <h3 class="m-b-10">Dashboard | Gestores Escolares</h3>
+    </div>
+</div>
+<div style="margin: 0 auto;text-align: center;display: flex;flex-direction: row;justify-content: center;align-self: center;">
+    <div class="col-xl-6">
+        <div class="card" style="border-radius: 20px;">
+            <div class="card-header">
+                <h5>Turmas por escolas </h5>
+            </div>
+            <div id="container" style="width: 100%;margin-top: 30px;margin-bottom: 50px;">
+                <canvas id="pie-chart"></canvas>
+            </div>
 
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+            <script>
+
+                const data = {
+                    labels: {{ labels_chart|safe }},
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: {{ data_chart|safe }},
+                        backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)',
+                        'rgb(86, 255, 114)',
+                        'rgb(255, 185, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                };
+
+                var config = {
+                    type: 'doughnut',
+                    data: data
+                };
+
+                window.onload = function() {
+                  var ctx = document.getElementById('pie-chart').getContext('2d');
+                  window.myPie = new Chart(ctx, config);
+                };
+
+            </script>
+        </div>
+    </div>
+
+</div>
 
 {% endblock content %}
 
