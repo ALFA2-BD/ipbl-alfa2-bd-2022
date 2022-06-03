@@ -93,16 +93,113 @@ def informacoes(request):
     return response
 
 def escolas(request):
-    context = {'segment': 'escolas'}
+
+    identificador = request.COOKIES.get('identificador')
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    escolas = scripts_mongodb.get_data_find(
+        collection_name='gestores',
+        filter = {'identificador': identificador}
+    )[0]['escolas']
+
+    scripts_mongodb.close_connection()
+    escolas_federais = []
+    escolas_estaduais = []
+    escolas_municipais = []
+    for escola in escolas:
+        if(escola["depen_admin"] == 1):
+            escolas_federais.append(escola)
+        elif(escola["depen_admin"] == 2):
+            escolas_estaduais.append(escola)
+        elif(escola["depen_admin"] == 3):
+            escolas_municipais.append(escola)
+    context = {
+        'segment': 'escolas',
+        'escolas_federais': escolas_federais,
+        'escolas_estaduais': escolas_estaduais,
+        'escolas_municipais': escolas_municipais,
+        'escolas': escolas,
+    }
     html_template = loader.get_template('gestor/screens/escolas.html')
-    return HttpResponse(html_template.render(context, request))
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
 
 def gestores_escolares(request):
-    context = {'segment': 'gestores_escolares'}
+    identificador = request.COOKIES.get('identificador')
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    escolas_query = scripts_mongodb.get_data_find(
+        collection_name='gestores',
+        filter = {'identificador': identificador}
+    )[0]['escolas']
+    scripts_mongodb.close_connection()
+
+    escolas = []
+    total_turmas = 0
+
+    for escola in escolas_query:
+        escolas.append({
+            "nome": escola["nome"],
+            "quantidade": len(escola["turmas"])
+        })
+        total_turmas += len(escola["turmas"])
+
+    context = {
+        'segment': 'gestores_escolares',
+        'escolas': escolas,
+        'total_turmas': total_turmas
+    }
+
     html_template = loader.get_template('gestor/screens/gestores_escolares.html')
-    return HttpResponse(html_template.render(context, request))
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
+
 
 def resumo_coletas(request):
-    context = {'segment': 'resumo_coletas'}
+    identificador = request.COOKIES.get('identificador')
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    escolas_query = scripts_mongodb.get_data_find(
+        collection_name='gestores',
+        filter = {'identificador': identificador}
+    )[0]['escolas']
+    scripts_mongodb.close_connection()
+
+    list_alunos = []
+
+    for escola in escolas_query:
+        for turma in escola["turmas"]:
+            list_alunos = list_alunos + turma["alunos"]
+
+    avaliacoes = []
+    for aluno in list_alunos:
+        avaliacoes.append(scripts_mongodb.get_data_find(
+                collection_name='alunos',
+                filter = {'_id': aluno}
+            )[0]["avaliacao"]
+        )
+
+    list_avaliacoes = []
+    for avaliacao in avaliacoes:
+        list_avaliacoes.append(scripts_mongodb.get_data_find(
+                collection_name='avaliacoes',
+                filter = {'_id': avaliacao}
+            )[0]["avaliacoes"]
+        )
+    scripts_mongodb.close_connection()
+    context = {
+        'segment': 'resumo_coletas',
+        'avaliacoes': list_avaliacoes
+    }
     html_template = loader.get_template('gestor/screens/resumo_coletas.html')
-    return HttpResponse(html_template.render(context, request))
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
