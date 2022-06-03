@@ -193,7 +193,7 @@ def turmas(request):
         filter = {
             'identificador': identificador
         }
-    )[0]
+    )[0]["_id"]
 
     turmas = scripts_mongodb.get_data_find(
         collection_name='turmas',
@@ -230,12 +230,15 @@ def alunos(request):
 
         turma = scripts_mongodb.db['turmas'].find_one(ObjectId(id_turma))
 
+        alunos_list_id = turma['alunos']
+        alunos = []
+
+        for aluno_id in alunos_list_id:
+            aluno = scripts_mongodb.db['alunos'].find_one(ObjectId(aluno_id))
+            aluno["id_aluno"] = aluno_id
+            alunos.append(aluno)
+
         scripts_mongodb.close_connection()
-
-        alunos = turma['alunos']
-
-        for i in range(len(alunos)):
-            alunos[i]['id_aluno'] = str(alunos[i].get('_id'))
 
         context = {
             'segment': 'alunos',
