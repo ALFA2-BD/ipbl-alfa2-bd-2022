@@ -13,34 +13,158 @@
     </div>
 </div>
 <div style="margin: 0 auto;text-align: center;display: flex;flex-direction: row;justify-content: center;align-self: center;">
-    <div class="col-xl-6">
-        <div class="card" style="border-radius: 20px;">
+    <div style="margin: 0 auto;display: flex;flex-direction: column;justify-content: center;align-content: center;width: 800px;">
+        <div class="card" style="border-radius: 20px;width: 100%;">
             <div class="card-header">
-                <h5>Resumo </h5>
+                <h5>Avaliação Diagnóstica por Escola</h5>
             </div>
-            <div class="card-block">
-                <div id="morris-donut-chart" style="height:300px;">
-                    <svg height="300" version="1.1" width="448.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;">
-                       <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc>
-                       <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
-                       <path fill="none" stroke="#1de9b6" d="M224.25,243.33333333333331A93.33333333333333,93.33333333333333,0,1,0,160.98844173779574,81.37721692215591" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-                       <path fill="#1de9b6" stroke="#ffffff" d="M224.25,246.33333333333331A96.33333333333333,96.33333333333333,0,1,0,158.95503450793916,79.17148460893948L132.74667465645456,50.74204590526121A135,135,0,1,1,224.25,285Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                       <path fill="none" stroke="#a389d4" d="M160.98844173779574,81.37721692215591A93.33333333333333,93.33333333333333,0,0,0,142.57344433858827,195.16692779456469" stroke-width="2" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path>
-                       <path fill="#a389d4" stroke="#ffffff" d="M158.95503450793916,79.17148460893948A96.33333333333333,96.33333333333333,0,0,0,139.94812647804287,196.61872190224713L101.73516650788238,217.75039169184703A140,140,0,0,1,129.35766260669362,47.06582538323386Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                       <path fill="none" stroke="#04a9f5" d="M142.57344433858827,195.16692779456469A93.33333333333333,93.33333333333333,0,0,0,190.2135729458391,236.9058844066263" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-                       <path fill="#04a9f5" stroke="#ffffff" d="M139.94812647804287,196.61872190224713A96.33333333333333,96.33333333333333,0,0,0,189.11954493338393,239.69928783398217L175.01873943951728,275.70315423101306A135,135,0,0,1,106.11069627545801,215.33073484570963Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                       <path fill="none" stroke="#1dc4e9" d="M190.2135729458391,236.9058844066263A93.33333333333333,93.33333333333333,0,0,0,224.22067846904883,243.333328727518" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-                       <path fill="#1dc4e9" stroke="#ffffff" d="M189.11954493338393,239.69928783398217A96.33333333333333,96.33333333333333,0,0,0,224.21973599126827,246.3333285794739L224.2075884998742,284.9999933380171A135,135,0,0,1,175.01873943951728,275.70315423101306Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                       <text x="224.25" y="140" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="15px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 15px; font-weight: 800;" font-weight="800" transform="matrix(2.7451,0,0,2.7451,-391.3382,-259.1471)" stroke-width="0.36428571428571427">
-                          <tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">Dados</tspan>
-                       </text>
-                       <text x="224.25" y="160" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 14px;" transform="matrix(1.9444,0,0,1.9444,-211.895,-143.5556)" stroke-width="0.5142857142857143">
-                          <tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5">val : 60</tspan>
-                       </text>
-                    </svg>
-                 </div>
+            <div id="container" style="width: 90%;margin-top: 30px;margin-bottom: 50px;justify-content: center;align-self: center;">
+                <canvas id="bar-chart-av1"></canvas>
             </div>
         </div>
+        <div class="card" style="border-radius: 20px;width: 100%;">
+            <div class="card-header">
+                <h5>Avaliação Formativa de Processo por Escola</h5>
+            </div>
+            <div id="container" style="width: 90%;margin-top: 30px;margin-bottom: 50px;justify-content: center;align-self: center;">
+                <canvas id="bar-chart-av2"></canvas>
+            </div>
+        </div>
+        <div class="card" style="border-radius: 20px;width: 100%;">
+            <div class="card-header">
+                <h5>Avaliação Formativa de Saída por Escola</h5>
+            </div>
+            <div id="container" style="width: 90%;margin-top: 30px;margin-bottom: 50px;justify-content: center;align-self: center;">
+                <canvas id="bar-chart-av3"></canvas>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+        <script>
+
+            const data1 = {
+                labels: {{ escolas_name_label|safe }},
+                datasets: [{label: 'Média Avaliação Diagnóstica',
+                    data: {{ mean_av1|safe }},
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var config1 = {
+                type: 'bar',
+                data: data1,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                },
+            };
+
+            const data2 = {
+                labels: {{ escolas_name_label|safe }},
+                datasets: [{label: 'Média Avaliação Formativa de Processo',
+                    data: {{ mean_av2|safe }},
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var config2 = {
+                type: 'bar',
+                data: data2,
+                options: {
+                    scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                    }
+                },
+            };
+
+            const data3 = {
+                labels: {{ escolas_name_label|safe }},
+                datasets: [{label: 'Média Avaliação Formativa de Saída',
+                    data: {{ mean_av3|safe }},
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var config3 = {
+                type: 'bar',
+                data: data3,
+                options: {
+                    scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                    }
+                },
+            };
+
+            window.onload = function() {
+                var ctx1 = document.getElementById('bar-chart-av1').getContext('2d');
+                window.myPie = new Chart(ctx1, config1);
+                var ctx2 = document.getElementById('bar-chart-av2').getContext('2d');
+                window.myPie = new Chart(ctx2, config2);
+                var ctx3 = document.getElementById('bar-chart-av3').getContext('2d');
+                window.myPie = new Chart(ctx3, config3);
+            };
+
+        </script>
     </div>
 
 </div>
