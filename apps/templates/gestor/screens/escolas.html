@@ -11,245 +11,136 @@
     <h3 class="m-b-10" style="margin-bottom: 70px;text-align: center;">Escolas | Detalhamento por classificação</h3>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Federal</a>
+            <a class="nav-link" id="federal-tab" data-toggle="tab" href="#federal" role="tab" aria-controls="federal" aria-selected="false">Federal</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active show" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Estadual</a>
+            <a class="nav-link" id="estadual-tab" data-toggle="tab" href="#estadual" role="tab" aria-controls="estadual" aria-selected="true">Estadual</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Municipal</a>
+            <a class="nav-link" id="municipal-tab" data-toggle="tab" href="#municipal" role="tab" aria-controls="municipal" aria-selected="false">Municipal</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Todas</a>
+        <li class="nav-item" style="background-color: #3D5482;border-top-left-radius: 10px;border-top-right-radius: 10px;">
+            <a class="nav-link active show" id="todas-tab" data-toggle="tab" href="#todas" role="tab" aria-controls="todas" aria-selected="false">Todas</a>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent" style="border-radius: 20px;border-top-left-radius: 0px;">
-        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade" id="federal" role="tabpanel" aria-labelledby="federal-tab">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Escola</th>
                         <th>UF</th>
                         <th>Município</th>
-                        <th>Endereço</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">The quick brown fox</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">3:28 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-green">Done</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-2.jpg" alt="activity-user">Albert Andersen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">Jumps over the lazy</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">2:37 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-red">Missed</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i></td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-3.jpg" alt="activity-user">Silje Larsen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">Dog the quick brown</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">10:23 AM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-purple">Delayed</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-purple f-10"></i></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">The quick brown fox</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">4:28 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-green">Done</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                    </tr>
+                    {% for escola_federal in escolas_federais %}
+                        <tr>
+                            <td>
+                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_federal.nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_federal.uf}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_federal.municipio}}</h6>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
 
         </div>
-        <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade active show" id="estadual" role="tabpanel" aria-labelledby="estadual-tab">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Escola</th>
                         <th>UF</th>
                         <th>Município</th>
-                        <th>Endereço</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-2.jpg" alt="activity-user">Albert Andersen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">Jumps over the lazy</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">2:37 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-red">Missed</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">The quick brown fox</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">3:28 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-green">Done</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">The quick brown fox</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">4:28 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-green">Done</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-3.jpg" alt="activity-user">Silje Larsen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">Dog the quick brown</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">10:23 AM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-purple">Delayed</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-purple f-10"></i></td>
-                    </tr>
+                    {% for escola_estadual in escolas_estaduais %}
+                        <tr>
+                            <td>
+                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_estadual.nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.uf}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_estadual.municipio}}</h6>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
 
         </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="tab-pane fade" id="municipal" role="tabpanel" aria-labelledby="municipal-tab">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Escola</th>
                         <th>UF</th>
                         <th>Município</th>
-                        <th>Endereço</th>
                         <th class="text-right"></th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for escola_municipal in escolas_municipais %}
+                        <tr>
+                            <td>
+                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola_municipal.nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_municipal.uf}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola_municipal.municipio}}</h6>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="todas" role="tabpanel" aria-labelledby="todas-tab">
+            <table class="table table-hover">
+                <thead>
                     <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-3.jpg" alt="activity-user">Silje Larsen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">Dog the quick brown</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">10:23 AM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-purple">Delayed</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-purple f-10"></i></td>
+                        <th>Escola</th>
+                        <th>UF</th>
+                        <th>Município</th>
+                        <th>Classificação</th>
+                        <th class="text-right"></th>
                     </tr>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">The quick brown fox</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">3:28 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-green">Done</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-2.jpg" alt="activity-user">Albert Andersen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">Jumps over the lazy</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">2:37 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-red">Missed</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;" src="https://appsrv1-147a1.kxcdn.com/dattaable/images/user/avatar-1.jpg" alt="activity-user">Ida Jorgensen</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">The quick brown fox</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0">4:28 PM</h6>
-                        </td>
-                        <td>
-                            <h6 class="m-0 text-c-green">Done</h6>
-                        </td>
-                        <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
-                    </tr>
+                </thead>
+                <tbody>
+                    {% for escola in escolas %}
+                        <tr>
+                            <td>
+                                <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{escola.nome}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.uf}}</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0">{{escola.municipio}}</h6>
+                            </td>
+                            {% if escola.depen_admin == 1 %}
+                                <td><p>Federal</p></td>
+                            {% elif escola.depen_admin == 2 %}
+                                <td><p>Estadual</p></td>
+                            {% elif escola.depen_admin == 3 %}
+                                <td><p>Municipal</p></td>
+                            {% else %}
+                                <td><p class="text-dark mb-1">Não Classificado</p></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
