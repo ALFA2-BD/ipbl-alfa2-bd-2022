@@ -7,6 +7,8 @@ from utils.CryptoHelper import CryptoHelper
 from bson.objectid import ObjectId
 import json
 from random import randint
+from pymongo import InsertOne
+from utils.CryptoHelper import CryptoHelper
 
 def login(request):
     context = {
@@ -130,9 +132,42 @@ def coleta(request):
 
 def submit_audios(request):
 
-    print(request.POST)
+    crypto = CryptoHelper()
 
-    response = HttpResponse(json.dumps(request.POST), content_type="application/json")
+    context = {
+        'segment': 'turmas',
+        'err':''
+    }
+
+    data = request.POST
+    identificador = request.COOKIES.get('identificador')
+    audio1 = request.COOKIES.get('audio1')
+    audio2 = request.COOKIES.get('audio2')
+    audio3 = request.COOKIES.get('audio3')
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    blockchain = [
+        InsertOne({
+            'hash': crypto.encrypt_message(identificador),
+            'prevous_hash': crypto.encrypt_message(identificador),
+            'data':{
+                'identificador': identificador,
+                'audio1': audio1,
+                'audio2': audio2,
+                'audio3': audio3
+            }
+        })
+    ]
+
+    collection_gestores = scripts_mongodb.db['blockchain']
+
+    collection_gestores.bulk_write(blockchain)
+
+    scripts_mongodb.close_connection()
+
+    response = redirect('/professor/turmas', context)
+    response.set_cookie('identificador', identificador)
 
     return response
 
