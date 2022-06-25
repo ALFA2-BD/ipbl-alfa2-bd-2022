@@ -1,0 +1,69 @@
+{% extends "gestor/base/base.html" %}
+
+{% block title %} Escolas {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="card-body" style="margin: 0 auto;max-width: 1000px; width: 90%;">
+    <h5 style="text-align: center; margin-top: 40px; margin-bottom: 40px;">Cadastro Nova Escola</h5>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nome da Escola</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome Escola">
+                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+                <div class="form-group">
+                    <label>Código INEP</label>
+                    <input type="text" class="form-control" placeholder="INEP">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Categoria</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Pública</option>
+                        <option>Privada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Dependência Administrativa</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Federal</option>
+                        <option>Estadual</option>
+                        <option>Municipal</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label>UF</label>
+                    <input type="text" class="form-control" placeholder="UF">
+                </div>
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input type="text" class="form-control" placeholder="Ex.: 12228-460">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Município</label>
+                    <input type="text" class="form-control" placeholder="Município">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Endereço</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

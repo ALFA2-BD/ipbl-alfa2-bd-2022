@@ -139,12 +139,23 @@
                             {% else %}
                                 <td><p class="text-dark mb-1">Não Classificado</p></td>
                             {% endif %}
+                            <td>
+                                <form action="/gestor/escola_individual" method="POST">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary" type="submit" name="id" value="{{escola.id}}" class="button store-button" style="font-size: 12px;">Visualizar</button>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+
+    <form style="text-align: center; margin-top: 40px;" action="/gestor/cadastro_escolas" method="POST">
+        {% csrf_token %}
+        <button style="background-color: #3D5482; border: none;" class="btn btn-primary" type="submit" name="id_turma" value="1" class="button store-button">Cadastrar Nova Escola</button>
+    </form>
 </div>
 
 {% endblock content %}

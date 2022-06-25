@@ -29,7 +29,7 @@ class ScriptsMongoDB:
 
     def create_id(self):
         return ObjectId()
-        
+
     def send_json_to_db(self, *args, **kwargs)->None:
 
         if 'path_json' in kwargs and 'collection_name' in kwargs:
@@ -130,6 +130,14 @@ class ScriptsMongoDB:
 
         return []
 
+    def get_object_by_id(self, *args, **kwargs):
+        if 'collection_name' in kwargs and '_id' in kwargs:
+            collection_name = kwargs['collection_name']
+            _id = kwargs['_id']
+            objInstance = ObjectId(_id)
+            object_found = self.db[collection_name].find_one({"_id": objInstance})
+
+            return object_found
 
     def number_elements_collection(self, *args, **kwargs):
 

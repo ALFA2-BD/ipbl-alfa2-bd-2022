@@ -108,6 +108,7 @@ def escolas(request):
     escolas_estaduais = []
     escolas_municipais = []
     for escola in escolas:
+        escola["id"] = escola["_id"]
         if(escola["depen_admin"] == 1):
             escolas_federais.append(escola)
         elif(escola["depen_admin"] == 2):
@@ -245,6 +246,39 @@ def resumo_coletas(request):
         "mean_av3": mean_av3
     }
     html_template = loader.get_template('gestor/screens/resumo_coletas.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
+
+def cadastro_escolas(request):
+    identificador = request.COOKIES.get('identificador')
+
+    context={}
+
+    html_template = loader.get_template('gestor/screens/cadastro_escolas.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
+
+def escola_individual(request):
+    identificador = request.COOKIES.get('identificador')
+    id_escola = request.POST['id']
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    escola_query = scripts_mongodb.get_object_by_id(
+        collection_name='escolas',
+        _id=id_escola
+    )
+    scripts_mongodb.close_connection()
+
+    context={
+        "escola": escola_query
+    }
+
+    html_template = loader.get_template('gestor/screens/escola_individual.html')
     response = HttpResponse(html_template.render(context, request))
     response.set_cookie('identificador', identificador)
 

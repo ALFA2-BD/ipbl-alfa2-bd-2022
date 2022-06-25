@@ -10,4 +10,8 @@ urlpatterns = [
     path('escolas', views.escolas, name='gestor'),
     path('gestores_escolares', views.gestores_escolares, name='gestor'),
     path('resumo_coletas', views.resumo_coletas, name='gestor'),
+
+    path('cadastro_escolas', views.cadastro_escolas, name='gestor'),
+    path('escola_individual', views.escola_individual, name='gestor'),
+
 ]
