@@ -153,3 +153,20 @@ class ScriptsMongoDB:
     def close_connection(self, *args, **kwargs):
 
         self.client.close()
+
+    def insert_object(self, *args, **kwargs):
+
+        if 'collection_name' in kwargs and 'object' in kwargs:
+            collection_name = kwargs['collection_name']
+            object_to_insert = kwargs['object']
+            new_object = [
+                InsertOne(object_to_insert)
+            ]
+
+            collection_gestores = self.db[collection_name]
+
+            collection_gestores.bulk_write(new_object)
+
+            return {"status": 200}
+
+        return {"status": 400}

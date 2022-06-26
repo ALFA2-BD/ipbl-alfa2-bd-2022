@@ -1,3 +1,4 @@
+from xxlimited import Null
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -258,6 +259,52 @@ def cadastro_escolas(request):
 
     html_template = loader.get_template('gestor/screens/cadastro_escolas.html')
     response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
+
+def cadastro_turma(request):
+    identificador = request.COOKIES.get('identificador')
+
+    context={}
+
+    html_template = loader.get_template('gestor/screens/cadastro_turma.html')
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
+
+def submit_turma(request):
+    context = {
+        'segment': 'escolas',
+        'err':''
+    }
+
+    # data = request.POST
+    identificador = request.COOKIES.get('identificador')
+
+    ano = request.POST["ano"]
+    nome_provedor = request.POST["nome_provedor"]
+    ano_escolar = request.POST["ano_escolar"]
+
+    # teste = {}[0]
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    scripts_mongodb.insert_object(
+        collection_name="turmas",
+        object={
+            "ano":ano,
+            "nome_provedor":nome_provedor,
+            "ano_escolar":ano_escolar,
+            "alunos":[],
+            "professor":None
+        }
+    )
+
+    scripts_mongodb.close_connection()
+
+    response = redirect('/gestor/escolas', context)
     response.set_cookie('identificador', identificador)
 
     return response

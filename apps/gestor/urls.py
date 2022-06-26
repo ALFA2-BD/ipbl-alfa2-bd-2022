@@ -12,6 +12,9 @@ urlpatterns = [
     path('resumo_coletas', views.resumo_coletas, name='gestor'),
 
     path('cadastro_escolas', views.cadastro_escolas, name='gestor'),
+    path('cadastro_turma', views.cadastro_turma, name='gestor'),
     path('escola_individual', views.escola_individual, name='gestor'),
+
+    path('submit_turma', views.submit_turma, name='gestor'),
 
 ]

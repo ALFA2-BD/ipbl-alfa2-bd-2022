@@ -16,7 +16,47 @@
         <p>CEP: {{escola.cep}}</p>
     </section>
 
+    <section>
+        <div class="card Recent-Users">
+            <div class="card-header">
+                <h5>Turmas</h5>
+            </div>
+            <div class="card-block px-0 py-3">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ano Escolar</th>
+                                <th>Ano</th>
+                                <th>Nome provedor</th>
+                                <th class="text-right"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for turma in escola.turmas %}
+                                <tr>
+                                    <td>
+                                        <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="../../../static/assets/images/icons/escola.jpg" alt="activity-user">{{turma.ano_escolar}}° ano</h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="m-0">{{turma.ano}}</h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="m-0">{{turma.nome_provedor}}</h6>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <form style="text-align: center; margin-top: 20px;margin-bottom: 30px;" action="/gestor/cadastro_turma" method="POST">
+        {% csrf_token %}
+        <button style="background-color: #3D5482; border: none;" class="btn btn-primary" type="submit" name="id_turma" value="1" class="button store-button">Cadastrar Nova Turma</button>
+    </form>
 
 </div>
 

@@ -1,0 +1,36 @@
+{% extends "gestor/base/base.html" %}
+
+{% block title %} Escolas {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="card-body" style="margin: 0 auto;max-width: 1000px; width: 90%;display: flex;flex-direction: column;align-items: center;">
+    <h5 style="text-align: center; margin-top: 40px; margin-bottom: 30px;">Cadastro Nova Turma</h5>
+    <hr style="width: 100%;margin-bottom: 50px">
+    <div class="row">
+        <form style="text-align: center; width: 600px;" action="/gestor/submit_turma" method="POST">
+            <div class="form-group">
+                <label>Ano</label>
+                <input type="text" name="ano" class="form-control" placeholder="Ano">
+            </div>
+            <div class="form-group">
+                <label>Nome Provedor</label>
+                <input type="text" name="nome_provedor" class="form-control" placeholder="Nome Provedor">
+            </div>
+            <div class="form-group">
+                <label>Ano Escolar</label>
+                <input type="text" name="ano_escolar" class="form-control" placeholder="Ano Escolar">
+            </div>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" style="margin-top: 30px;">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
