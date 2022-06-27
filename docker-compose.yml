@@ -27,8 +27,6 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: core
     command: [ "postgres", "-c", "log_statement=all" ]
-    ports:
-      - "5432:5432/tcp"
     restart: always
     networks:
       - alfa2bd

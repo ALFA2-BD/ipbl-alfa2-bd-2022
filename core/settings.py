@@ -20,7 +20,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 # load production server from .env
-ALLOWED_HOSTS        = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER')]
+ALLOWED_HOSTS        = ['*']
 CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + os.getenv('SERVER')]
 
 # Application definition
@@ -32,10 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.professor',
-    'apps.gestor',
-    # 'apps.home',
-    # 'apps.authentication'
+    'apps.home',
+    'apps.authentication'
 ]
 
 MIDDLEWARE = [
@@ -50,8 +48,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-LOGIN_REDIRECT_URL = ""  # Route defined in home/urls.py
-LOGOUT_REDIRECT_URL = ""  # Route defined in home/urls.py
+LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
+LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
 
 TEMPLATES = [
@@ -72,35 +70,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-#### PostgreSQL ####
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.getenv('DB_PG_ENGINE'),
-#         'NAME': os.getenv('DB_PG_NAME'),
-#         'USER': os.getenv('BD_PG_USER_NAME'),
-#         'PASSWORD': os.getenv('DB_PG_PASSWORD'),
-#         'HOST': os.getenv('DB_PG_HOST_NAME'),
-#         'PORT': os.getenv('DB_PG_PORT'),
-#     }
-# }
-
-#### MongoDB ####
-
-CONNECT_STR_MONGODB = "mongodb+srv://{}:{}@{}.tirlce4.mongodb.net/?retryWrites=true&w=majority".format(
-    os.getenv('DB_MONGO_USER'),
-    os.getenv('DB_MONGO_PASSWORD'),
-    os.getenv('DB_MONGO_NAME'),
-    os.getenv('DB_MONGO_CLUSTER')
-)
+# Database
+# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_MONGO_ENGINE'),
-        'NAME': os.getenv('DB_MONGO_NAME'),
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': CONNECT_STR_MONGODB
-        }
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('BD_USER_NAME'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST_NAME'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
@@ -148,7 +128,6 @@ STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
-#############################################################
-#############################################################
 
-ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = False
+#############################################################
+#############################################################
