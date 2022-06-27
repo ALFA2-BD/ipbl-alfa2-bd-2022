@@ -33,3 +33,5 @@ apps/static/assets/.temp
 mm_test.py
 .vscode
 **/migrations
+
+audios/
