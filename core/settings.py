@@ -6,9 +6,9 @@ Copyright (c) 2019 - present AppSeed.us
 import os
 from unipath import Path
 from dotenv import load_dotenv
-import django_heroku
+# import django_heroku
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 load_dotenv()
 
