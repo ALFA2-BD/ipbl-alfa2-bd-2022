@@ -1,9 +1,6 @@
 import speech_recognition as sr
 from pydub import AudioSegment
 from pydub.utils import make_chunks
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-from core.settings import DEBUG
 from tqdm import tqdm
 import os
 
