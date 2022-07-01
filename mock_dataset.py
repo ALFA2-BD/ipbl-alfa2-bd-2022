@@ -347,12 +347,6 @@ def main(*args, **kwargs):
 
         collection_gestores_admin.bulk_write(obj_gestores_admin)
 
-    ### Remaining updates ###
-
-    # # Updating avaliacoes relations
-    # for i in range(2 *number_of_profs):
-    #     collection_avaliacoes.update_one({"_id": avaliacoes[i]['_id']},{"$set":{"aluno":  alunos[i]["_id"]} })
-    #     collection_avaliacoes.update_one({"_id": avaliacoes[i]['_id']},{"$set":{"professor":  alunos[i]["_id"]} })
 
 if __name__ == '__main__':
 
