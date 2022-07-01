@@ -99,10 +99,18 @@ def escolas(request):
 
     scripts_mongodb = ScriptsMongoDB()
 
-    escolas = scripts_mongodb.get_data_find(
+    escolas_query = scripts_mongodb.get_data_find(
         collection_name='gestores',
         filter = {'identificador': identificador}
     )[0]['escolas']
+
+    escolas=[]
+    for escola in escolas_query:
+        escola_query = scripts_mongodb.get_object_by_id(
+            collection_name='escolas',
+            _id=escola["_id"]
+        )
+        escolas.append(escola_query)
 
     scripts_mongodb.close_connection()
     escolas_federais = []
@@ -138,7 +146,8 @@ def gestores_escolares(request):
         collection_name='gestores',
         filter = {'identificador': identificador}
     )[0]['escolas']
-    scripts_mongodb.close_connection()
+
+    aux_escolas = []
 
     escolas = []
     labels_chart = []
@@ -146,6 +155,13 @@ def gestores_escolares(request):
     total_turmas = 0
 
     for escola in escolas_query:
+        escola_query = scripts_mongodb.get_object_by_id(
+            collection_name='escolas',
+            _id=escola["_id"]
+        )
+        aux_escolas.append(escola_query)
+
+    for escola in aux_escolas:
         labels_chart.append(escola["nome"])
         data_chart.append(len(escola["turmas"]))
         escolas.append({
@@ -153,6 +169,8 @@ def gestores_escolares(request):
             "quantidade": len(escola["turmas"])
         })
         total_turmas += len(escola["turmas"])
+
+    scripts_mongodb.close_connection()
 
     context = {
         'segment': 'gestores_escolares',
@@ -178,14 +196,22 @@ def resumo_coletas(request):
         collection_name='gestores',
         filter = {'identificador': identificador}
     )[0]['escolas']
-    scripts_mongodb.close_connection()
 
     list_alunos = []
     escolas = []
 
-    for escola in escolas_query:
+    for escola_id in escolas_query:
+
+        escola = scripts_mongodb.get_object_by_id(
+            collection_name='escolas',
+            _id=escola_id["_id"]
+        )
         escola_aux = {"nome": escola["nome"], "alunos": []}
-        for turma in escola["turmas"]:
+        for turma_id in escola["turmas"]:
+            turma = scripts_mongodb.get_object_by_id(
+                collection_name='turmas',
+                _id=turma_id["_id"]
+            )
             escola_aux['alunos'] = escola_aux['alunos'] + turma["alunos"]
             list_alunos = list_alunos + turma["alunos"]
         escolas.append(escola_aux)
@@ -234,9 +260,20 @@ def resumo_coletas(request):
                 if(coleta["metrica"] != None):
                     av3 += coleta["metrica"]
                     cont3 += 1
-        mean_av1.append(av1/cont1)
-        mean_av2.append(av2/cont2)
-        mean_av3.append(av3/cont3)
+
+        if cont1 != 0:
+            mean_av1.append(av1/cont1)
+        else:
+            mean_av1.append(0)
+        if cont2 != 0:
+            mean_av2.append(av2/cont2)
+        else:
+            mean_av2.append(0)
+        if cont3 != 0:
+            mean_av3.append(av3/cont3)
+        else:
+            mean_av3.append(0)
+        # teste={}[0]
 
     context = {
         'segment': 'resumo_coletas',
@@ -265,12 +302,14 @@ def cadastro_escolas(request):
 
 def cadastro_turma(request):
     identificador = request.COOKIES.get('identificador')
+    id_escola = request.COOKIES.get('id_escola')
 
     context={}
 
     html_template = loader.get_template('gestor/screens/cadastro_turma.html')
     response = HttpResponse(html_template.render(context, request))
     response.set_cookie('identificador', identificador)
+    response.set_cookie('id_escola', id_escola)
 
     return response
 
@@ -282,16 +321,26 @@ def submit_turma(request):
 
     # data = request.POST
     identificador = request.COOKIES.get('identificador')
+    id_escola = request.COOKIES.get('id_escola')
 
     ano = request.POST["ano"]
     nome_provedor = request.POST["nome_provedor"]
     ano_escolar = request.POST["ano_escolar"]
 
-    # teste = {}[0]
-
     scripts_mongodb = ScriptsMongoDB()
 
-    scripts_mongodb.insert_object(
+    escola_query = scripts_mongodb.get_object_by_id(
+        collection_name='escolas',
+        _id=id_escola
+    )
+
+    turmas_query = escola_query["turmas"]
+    turmas = []
+
+    for turma in turmas_query:
+        turmas.append({"_id": turma["_id"]})
+
+    result = scripts_mongodb.insert_object(
         collection_name="turmas",
         object={
             "ano":ano,
@@ -302,6 +351,71 @@ def submit_turma(request):
         }
     )
 
+    turmas.append({"_id": ObjectId(result["id"])})
+    # teste = {}[0]
+
+    scripts_mongodb.db["escolas"].update_one({"_id": ObjectId(id_escola)}, {"$set": {"turmas": turmas}})
+
+    scripts_mongodb.close_connection()
+
+    response = redirect('/gestor/escola_individual', context)
+    response.set_cookie('identificador', identificador)
+
+    return response
+
+def submit_escola(request):
+    context = {
+        'segment': 'escolas',
+        'err':''
+    }
+
+    # data = request.POST
+    identificador = request.COOKIES.get('identificador')
+
+    nome_escola = request.POST["nome_escola"]
+    codigo_inep = request.POST["codigo_inep"]
+    categoria = request.POST["categoria"]
+    dependencia = request.POST["dependencia"]
+    uf = request.POST["uf"]
+    cep = request.POST["cep"]
+    municipio = request.POST["municipio"]
+    endereco = request.POST["endereco"]
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    gestor_query = scripts_mongodb.get_data_find(
+        collection_name='gestores',
+        filter = {'identificador': identificador}
+    )[0]
+
+    escolas_gestor = gestor_query["escolas"]
+    escolas = []
+
+    for escola in escolas_gestor:
+        escolas.append({"_id": escola["_id"]})
+
+    result = scripts_mongodb.insert_object(
+        collection_name="escolas",
+        object={
+            "nome": nome_escola,
+            "codigo_inep": codigo_inep,
+            "categ_admin": int(categoria),
+            "depen_admin": int(dependencia),
+            "uf": uf,
+            "cep": cep,
+            "municipio": municipio,
+            "endereco": endereco,
+            "hash_senha": "",
+            "infraestruturas": [],
+            "turmas": []
+        }
+    )
+
+    # teste = {}[0]
+    escolas.append({"_id": ObjectId(result["id"])})
+
+    scripts_mongodb.db["gestores"].update_one({"_id": gestor_query["_id"]}, {"$set": {"escolas": escolas}})
+
     scripts_mongodb.close_connection()
 
     response = redirect('/gestor/escolas', context)
@@ -311,7 +425,10 @@ def submit_turma(request):
 
 def escola_individual(request):
     identificador = request.COOKIES.get('identificador')
-    id_escola = request.POST['id']
+    try:
+        id_escola = request.POST['id']
+    except:
+        id_escola = request.COOKIES.get('id_escola')
 
     scripts_mongodb = ScriptsMongoDB()
 
@@ -319,6 +436,17 @@ def escola_individual(request):
         collection_name='escolas',
         _id=id_escola
     )
+
+    turmas_query = escola_query["turmas"]
+    escola_query["turmas"] = []
+
+    for turma in turmas_query:
+        turma_ = scripts_mongodb.get_object_by_id(
+            collection_name='turmas',
+            _id=turma["_id"]
+        )
+        escola_query["turmas"].append(turma_)
+
     scripts_mongodb.close_connection()
 
     context={
@@ -328,5 +456,6 @@ def escola_individual(request):
     html_template = loader.get_template('gestor/screens/escola_individual.html')
     response = HttpResponse(html_template.render(context, request))
     response.set_cookie('identificador', identificador)
+    response.set_cookie('id_escola', id_escola)
 
     return response

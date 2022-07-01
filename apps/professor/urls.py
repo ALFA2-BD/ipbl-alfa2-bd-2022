@@ -18,4 +18,5 @@ urlpatterns = [
     path('submit_audios', views.submit_audios, name='professor'),
 
     path('banco_frases', views.banco_frases, name='professor'),
+    path('view_audio_metrics', views.view_audio_metrics, name='professor'),
 ]

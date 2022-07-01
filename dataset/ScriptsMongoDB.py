@@ -167,6 +167,6 @@ class ScriptsMongoDB:
 
             collection_gestores.bulk_write(new_object)
 
-            return {"status": 200}
+            return {"status": 200, "id": object_to_insert["_id"]}
 
         return {"status": 400}
