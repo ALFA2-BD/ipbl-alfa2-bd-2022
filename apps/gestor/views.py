@@ -108,7 +108,7 @@ def escolas(request):
     for escola in escolas_query:
         escola_query = scripts_mongodb.get_object_by_id(
             collection_name='escolas',
-            _id=escola["_id"]
+            _id=escola
         )
         escolas.append(escola_query)
 
@@ -157,7 +157,7 @@ def gestores_escolares(request):
     for escola in escolas_query:
         escola_query = scripts_mongodb.get_object_by_id(
             collection_name='escolas',
-            _id=escola["_id"]
+            _id=escola
         )
         aux_escolas.append(escola_query)
 
@@ -204,13 +204,13 @@ def resumo_coletas(request):
 
         escola = scripts_mongodb.get_object_by_id(
             collection_name='escolas',
-            _id=escola_id["_id"]
+            _id=escola_id
         )
         escola_aux = {"nome": escola["nome"], "alunos": []}
         for turma_id in escola["turmas"]:
             turma = scripts_mongodb.get_object_by_id(
                 collection_name='turmas',
-                _id=turma_id["_id"]
+                _id=turma_id
             )
             escola_aux['alunos'] = escola_aux['alunos'] + turma["alunos"]
             list_alunos = list_alunos + turma["alunos"]
@@ -334,11 +334,7 @@ def submit_turma(request):
         _id=id_escola
     )
 
-    turmas_query = escola_query["turmas"]
-    turmas = []
-
-    for turma in turmas_query:
-        turmas.append({"_id": turma["_id"]})
+    turmas = escola_query["turmas"]
 
     result = scripts_mongodb.insert_object(
         collection_name="turmas",
@@ -351,7 +347,7 @@ def submit_turma(request):
         }
     )
 
-    turmas.append({"_id": ObjectId(result["id"])})
+    turmas.append(ObjectId(result["id"]))
     # teste = {}[0]
 
     scripts_mongodb.db["escolas"].update_one({"_id": ObjectId(id_escola)}, {"$set": {"turmas": turmas}})
@@ -388,11 +384,7 @@ def submit_escola(request):
         filter = {'identificador': identificador}
     )[0]
 
-    escolas_gestor = gestor_query["escolas"]
-    escolas = []
-
-    for escola in escolas_gestor:
-        escolas.append({"_id": escola["_id"]})
+    escolas = gestor_query["escolas"]
 
     result = scripts_mongodb.insert_object(
         collection_name="escolas",
@@ -412,7 +404,7 @@ def submit_escola(request):
     )
 
     # teste = {}[0]
-    escolas.append({"_id": ObjectId(result["id"])})
+    escolas.append(ObjectId(result["id"]))
 
     scripts_mongodb.db["gestores"].update_one({"_id": gestor_query["_id"]}, {"$set": {"escolas": escolas}})
 
@@ -443,7 +435,7 @@ def escola_individual(request):
     for turma in turmas_query:
         turma_ = scripts_mongodb.get_object_by_id(
             collection_name='turmas',
-            _id=turma["_id"]
+            _id=turma
         )
         escola_query["turmas"].append(turma_)
 
