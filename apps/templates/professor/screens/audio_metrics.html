@@ -17,19 +17,46 @@
                     <div class="col-xl-10 col-md-6">
                         <div class="card Recent-Users">
                             <div class="card-header">
-                                <h5>Desempenho de coleta de áudio</h5>
-                                <p class="text-dark mb-1">Aluno</p>
-                                <p>{{ aluno.nome }} {{ aluno.sobrenome }}</p>
+                                <h5 style="margin-bottom: 20px;">Dados do Aluno</h5>
+                                <p class="text-dark mb-1" style="margin-top: 10px;">Aluno</p>
+                                <p style="margin-left: 10px;">{{ aluno.nome }} {{ aluno.sobrenome }}</p>
                                 <p class="text-dark mb-1">Professor</p>
-                                <p>{{ professor.nome }} {{ professor.sobrenome }}</p>
-                                {% for metric in metrics %}
-                                    <tr class="unread">
-                                        <p class="text-dark mb-1">Teste realizado em {{metric.data}}</p>
-                                        {% for coleta in metric.coleta %}
-                                            <p class="text-dark mb-1">Coleta {{coleta.metrica}}</p>
-                                        {% endfor%}
-                                {% endfor%}
+                                <p style="margin-left: 10px;">{{ professor.nome }} {{ professor.sobrenome }}</p>
                             </div>
+
+                        </div>
+
+                        <h3 style="text-align: center;margin-bottom: 20px;margin-top: 50px;">Desempenho da coleta de áudio</h3>
+
+                        <div class="card Recent-Users">
+                            <div class="card-header">
+                                <h5 style="margin-bottom: 20px;">Avaliação Diagnóstica | Teste realizado em {{metrics.0.data}}</h5>
+                                <tr class="unread">
+                                    {% for coleta in metrics.0.coleta %}
+                                        <p class="text-dark mb-1">Métrica da coleta tipo {{coleta.frase.tipo}}</p>
+                                        <p style="margin-left: 10px">{{coleta.metrica|floatformat:2 }}</p>
+                                    {% endfor%}
+                                </tr>
+                            </div>
+                            <div class="card-header">
+                                <h5 style="margin-bottom: 20px;">Avaliação Formativa de Processo | Teste realizado em {{metrics.1.data}}</h5>
+                                <tr class="unread">
+                                    {% for coleta in metrics.1.coleta %}
+                                        <p class="text-dark mb-1">Métrica da coleta tipo {{coleta.frase.tipo}}</p>
+                                        <p style="margin-left: 10px">{{coleta.metrica|floatformat:2 }}</p>
+                                    {% endfor%}
+                                </tr>
+                            </div>
+                            <div class="card-header">
+                                <h5 style="margin-bottom: 20px;">Avaliação Formativa de Saída | Teste realizado em {{metrics.2.data}}</h5>
+                                <tr class="unread">
+                                    {% for coleta in metrics.1.coleta %}
+                                        <p class="text-dark mb-1">Métrica da coleta tipo {{coleta.frase.tipo}}</p>
+                                        <p style="margin-left: 10px">{{coleta.metrica|floatformat:2 }}</p>
+                                    {% endfor%}
+                                </tr>
+                            </div>
+
                         </div>
                     </div>
                     <!--[ Recent Users ] end-->
