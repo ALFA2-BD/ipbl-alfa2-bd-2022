@@ -41,7 +41,13 @@
                                                         <td>
                                                             <form action="/professor/coleta" method="POST">
                                                                 {% csrf_token %}
-                                                                <button class="btn btn-primary" type="submit" name="id_aluno" value="{{aluno.id_aluno}}" class="button store-button">Coletar Audio</button>
+                                                                <button class="btn btn-primary" type="submit" name="id_aluno" value="{{aluno.id_aluno}}" class="button store-button">Coletar Áudio</button>
+                                                            </form>
+                                                        </td>
+                                                        <td>
+                                                            <form action="/professor/view_audio_metrics" method="POST">
+                                                                {% csrf_token %}
+                                                                <button class="btn btn-secondary" type="submit" name="id_aluno" value="{{aluno.id_aluno}}" class="button store-button">Ver Desempenho</button>
                                                             </form>
                                                         </td>
                                                     </tr>

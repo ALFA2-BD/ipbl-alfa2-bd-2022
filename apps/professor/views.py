@@ -130,6 +130,33 @@ def coleta(request):
 
     return response
 
+def view_audio_metrics(request):
+    identificador = request.COOKIES.get('identificador')
+
+    id_aluno = request.POST['id_aluno']
+
+    scripts_mongodb = ScriptsMongoDB()
+
+    aluno = scripts_mongodb.db['alunos'].find_one(ObjectId(id_aluno))
+    professor = scripts_mongodb.db['professores'].find_one({'identificador': identificador})
+    avaliacao = scripts_mongodb.get_object_by_id(collection_name='avaliacoes', _id=aluno['avaliacao'])
+
+    scripts_mongodb.close_connection()
+
+    context = {
+        'segment': 'coleta',
+        'professor': professor,
+        'aluno': aluno,
+        'metrics': avaliacao['avaliacoes']
+    }
+
+    html_template = loader.get_template('professor/screens/audio_metrics.html')
+
+    response = HttpResponse(html_template.render(context, request))
+    response.set_cookie('identificador', identificador)
+
+    return response
+
 def submit_audios(request):
 
     crypto = CryptoHelper()
