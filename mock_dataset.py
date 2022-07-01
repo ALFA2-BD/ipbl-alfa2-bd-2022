@@ -171,7 +171,7 @@ def main(*args, **kwargs):
             }
             obj_alunos.append(InsertOne(json_alunos))
 
-            # updatingo avaliacoes
+            # updating avaliacoes
             collection_avaliacoes.update_one({"_id": avaliacoes[i]['_id']},{"$set":{"aluno":  id} })
 
 
@@ -276,12 +276,12 @@ def main(*args, **kwargs):
                 'categ_admin': randint(1,2),
                 'depen_admin': randint(1,3),
                 'infraestruturas' : [
-                    infras[i],
-                    infras[i+1]
+                    infras[i]['_id'],
+                    infras[i+1]['_id']
                 ],
                 'turmas' : [
-                    turmas[i],
-                    turmas[i+1]
+                    turmas[i]['_id'],
+                    turmas[i+1]['_id']
                 ]
             }
             obj_escolas.append(InsertOne(json_escola))
@@ -312,8 +312,8 @@ def main(*args, **kwargs):
                 'identificador': fake.cpf(),
                 'hash_senha' : crypto.encrypt_message('1234'),
                 'escolas' : [
-                    escolas[i],
-                    escolas[i+1]
+                    escolas[i]['_id'],
+                    escolas[i+1]['_id']
                 ]
             }
 
@@ -337,8 +337,8 @@ def main(*args, **kwargs):
                 'nome': fake.first_name(),
                 'sobrenome' : fake.last_name(),
                 'gestor_escola' : [
-                    gestores[i],
-                    gestores[i+1]
+                    gestores[i]['_id'],
+                    gestores[i+1]['_id']
                 ],
                 'hash_senha' : crypto.encrypt_message('1234')
             }
@@ -346,6 +346,13 @@ def main(*args, **kwargs):
         collection_gestores_admin = scripts_mongodb.db['gestores_admin']
 
         collection_gestores_admin.bulk_write(obj_gestores_admin)
+
+    ### Remaining updates ###
+
+    # # Updating avaliacoes relations
+    # for i in range(2 *number_of_profs):
+    #     collection_avaliacoes.update_one({"_id": avaliacoes[i]['_id']},{"$set":{"aluno":  alunos[i]["_id"]} })
+    #     collection_avaliacoes.update_one({"_id": avaliacoes[i]['_id']},{"$set":{"professor":  alunos[i]["_id"]} })
 
 if __name__ == '__main__':
 
